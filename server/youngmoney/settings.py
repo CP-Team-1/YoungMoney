@@ -14,6 +14,8 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+from django.core.exceptions import ImproperlyConfigured
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,13 +25,17 @@ def env_bool(name, default=False):
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    "DJANGO_SECRET_KEY",
-    "django-insecure-%*zrg%en3s-8u&a)heii$o&z@^8tadojdbluh+c-@rcb+tm2dq",
-)
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+if not SECRET_KEY:
+    raise ImproperlyConfigured(
+        "DJANGO_SECRET_KEY environment variable is required but not set. "
+        "Generate one with: python -c "
+        "\"from django.core.management.utils import get_random_secret_key; "
+        "print(get_random_secret_key())\""
+    )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env_bool("DJANGO_DEBUG", True)
+DEBUG = env_bool("DJANGO_DEBUG", False)
 
 ALLOWED_HOSTS = [
     host.strip()
@@ -49,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'accounts',
 ]
@@ -87,12 +94,16 @@ WSGI_APPLICATION = 'youngmoney.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
+POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
+if not POSTGRES_PASSWORD:
+    raise ImproperlyConfigured("POSTGRES_PASSWORD environment variable is required but not set.")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('POSTGRES_DB', 'youngmoney'),
         'USER': os.environ.get('POSTGRES_USER', 'youngmoney'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'youngmoney'),
+        'PASSWORD': POSTGRES_PASSWORD,
         'HOST': os.environ.get('POSTGRES_HOST', 'db'),
         'PORT': os.environ.get('POSTGRES_PORT', '5432'),
     }
@@ -143,8 +154,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Custom user model
+#
+# App label is "account" (singular, set in accounts/apps.py) so model tables
+# default to account_xxx without needing an explicit Meta.db_table on every
+# model in this app.
 
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'account.User'
+
+
+# Account lockout (brute-force protection beyond the per-IP login throttle
+# above, which a distributed attacker can route around)
+
+ACCOUNT_LOCKOUT_THRESHOLD = 5
+ACCOUNT_LOCKOUT_DURATION = timedelta(minutes=15)
 
 
 # Django REST Framework / JWT
@@ -156,12 +178,21 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+    'DEFAULT_THROTTLE_CLASSES': (
+        'rest_framework.throttling.ScopedRateThrottle',
+    ),
+    'DEFAULT_THROTTLE_RATES': {
+        'auth-login': '5/min',
+        'auth-register': '5/min',
+        'auth-refresh': '10/min',
+    },
 }
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
 }
 
 
@@ -177,11 +208,37 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 
+# HTTPS enforcement
+#
+# Off by default because nothing in this stack terminates TLS yet (nginx in
+# ./nginx/default.conf only listens on port 80). Once TLS termination is in
+# place (in nginx or a load balancer in front of it, forwarding
+# X-Forwarded-Proto), set DJANGO_USE_HTTPS=True.
+
+USE_HTTPS = env_bool("DJANGO_USE_HTTPS", False)
+
+if USE_HTTPS:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 60 * 60 * 24 * 30  # 30 days
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
+#
+# Console backend prints outgoing mail (e.g. verification links) to the
+# backend container logs. Swap DJANGO_EMAIL_BACKEND for a real SMTP backend
+# once one is available.
 
-MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
-    },
-}
+EMAIL_BACKEND = os.environ.get(
+    'DJANGO_EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend'
+)
+DEFAULT_FROM_EMAIL = os.environ.get('DJANGO_DEFAULT_FROM_EMAIL', 'noreply@youngmoney.local')
+
+# Base URL of the frontend, used to build links (e.g. email verification)
+# that point at the SPA rather than the API itself.
+FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:5173')
