@@ -1,0 +1,70 @@
+.lesson-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.1s;
+}
+
+.lesson-card:hover {
+  border-color: var(--color-border-strong);
+  transform: translateY(-2px);
+}
+
+.lesson-card--done { border-color: var(--color-sage-border); }
+
+.lesson-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lesson-card__category {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-orange);
+}
+
+.lesson-card__badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-sage);
+  background: var(--color-sage-dim);
+  border-radius: var(--radius-full);
+  padding: 3px 10px;
+}
+
+.lesson-card__title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.lesson-card__desc {
+  font-size: 14px;
+  color: var(--color-muted);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.lesson-card__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-2);
+}
+
+.lesson-card__duration { font-size: 12px; color: var(--color-subtle); }
+
+.lesson-card__score {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-sage);
+}

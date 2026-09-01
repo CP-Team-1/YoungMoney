@@ -1,0 +1,43 @@
+.hub { max-width: 900px; display: flex; flex-direction: column; gap: var(--space-8); }
+
+.hub__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.hub__title { font-size: 32px; font-weight: 700; color: var(--color-text); }
+.hub__sub { font-size: 15px; color: var(--color-muted); margin-top: var(--space-2); }
+
+.hub__progress { min-width: 160px; display: flex; flex-direction: column; gap: var(--space-2); align-items: flex-end; }
+.hub__progress-count { font-size: 13px; color: var(--color-muted); font-weight: 600; }
+
+.hub__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.hub-filter {
+  padding: 7px 16px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: all 0.15s;
+}
+
+.hub-filter:hover { border-color: var(--color-border-strong); color: var(--color-text); }
+.hub-filter--active { background: var(--color-orange-dim); border-color: var(--color-orange-border); color: var(--color-orange); }
+
+.hub__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-5);
+}
