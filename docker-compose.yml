@@ -10,6 +10,11 @@ services:
       - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   backend:
     # user: "${UID}:${GID}"
@@ -18,14 +23,15 @@ services:
     container_name: youngmoney_backend_container
     env_file:
       - ./server/.env
-    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     # command: sh -c "gunicorn config.wsgi --bind 0.0.0.0:8000"
     ports:
       - "8000:8000"
     volumes:
       - ./server:/app
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   nginx:
     build:
