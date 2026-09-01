@@ -15,6 +15,7 @@ import Lesson from './pages/Lesson'
 import Quiz from './pages/Quiz'
 import QuizResult from './pages/QuizResult'
 import Cards from './pages/Cards'
+import LearningArticleRouter from './features/learningHub/LearningArticleRouter'
 
 function PrivateRoute({ children }) {
   const { isAuthenticated, loading } = useAuth()
@@ -41,6 +42,7 @@ export default function App() {
       <Route path="/budget" element={<PrivateRoute><Budget /></PrivateRoute>} />
       <Route path="/spend" element={<PrivateRoute><SpendLog /></PrivateRoute>} />
       <Route path="/learn" element={<PrivateRoute><LearningHub /></PrivateRoute>} />
+      <Route path="/learn/articles/:articleId" element={<PrivateRoute><LearningArticleRouter /></PrivateRoute>} />
       <Route path="/learn/:lessonId" element={<PrivateRoute><Lesson /></PrivateRoute>} />
       <Route path="/learn/:lessonId/quiz" element={<PrivateRoute><Quiz /></PrivateRoute>} />
       <Route path="/learn/:lessonId/result" element={<PrivateRoute><QuizResult /></PrivateRoute>} />
