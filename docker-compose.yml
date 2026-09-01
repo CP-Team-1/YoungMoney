@@ -1,0 +1,49 @@
+name: youngmoney
+
+services:
+  db:
+    image: postgres:15
+    container_name: youngmoney_db_container
+    env_file:
+      - ./server/.env
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    # user: "${UID}:${GID}"
+    build: ./server
+    image: youngmoney_backend_image
+    container_name: youngmoney_backend_container
+    env_file:
+      - ./server/.env
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    # command: sh -c "gunicorn config.wsgi --bind 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./server:/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+  nginx:
+    build:
+      context: ./client
+    image: youngmoney_frontend_image
+    container_name: youngmoney_nginx_container
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+    - backend
+
+volumes:
+  pgdata:
