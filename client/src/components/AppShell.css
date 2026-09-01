@@ -1,0 +1,35 @@
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.app-shell__main {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-8);
+  padding-bottom: calc(var(--space-8) + 72px); /* room for mobile nav */
+}
+
+@media (min-width: 768px) {
+  .app-shell__main {
+    padding-bottom: var(--space-8);
+  }
+}
+
+/* Hide sidebar on mobile */
+@media (max-width: 767px) {
+  .app-shell > aside.sidebar {
+    display: none;
+  }
+  .app-shell__main {
+    padding: var(--space-5);
+    padding-bottom: calc(var(--space-5) + 72px);
+  }
+}
+
+/* Hide mobile nav on desktop */
+@media (min-width: 768px) {
+  .mobile-nav {
+    display: none;
+  }
+}

@@ -1,0 +1,48 @@
+.goal-meter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.goal-meter__ring { position: relative; }
+
+.goal-meter__track {
+  fill: none;
+  stroke: var(--color-surface-alt);
+  stroke-width: 10;
+}
+
+.goal-meter__fill {
+  fill: none;
+  stroke: var(--color-orange);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.goal-meter__center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.goal-meter__pct {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.goal-meter__info { text-align: center; }
+
+.goal-meter__label {
+  font-size: 13px;
+  color: var(--color-muted);
+  margin-bottom: var(--space-1);
+}
+
+.goal-meter__current { font-weight: 700; color: var(--color-text); font-size: 16px; }
+.goal-meter__divider { color: var(--color-subtle); }
+.goal-meter__target { color: var(--color-muted); font-size: 14px; }

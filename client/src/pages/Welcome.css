@@ -1,0 +1,115 @@
+.welcome {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  background: var(--color-bg);
+}
+
+.welcome__content {
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.welcome__logo-mark {
+  width: 56px;
+  height: 56px;
+  background: var(--color-orange);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.welcome__title {
+  font-size: 48px;
+  font-weight: 500;
+  color: var(--color-text);
+  letter-spacing: -1px;
+  margin: 0;
+}
+
+.welcome__tagline {
+  font-size: 18px;
+  color: var(--color-muted);
+  line-height: 1.55;
+  max-width: 360px;
+}
+
+.welcome__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.welcome__btn {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  border-radius: var(--radius-full);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  transition: opacity 0.15s;
+}
+
+.welcome__btn--primary {
+  background: var(--color-orange);
+  color: #fff;
+}
+.welcome__btn--primary:hover { opacity: 0.88; }
+
+.welcome__btn--ghost {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-strong);
+}
+.welcome__btn--ghost:hover { background: var(--color-surface-alt); }
+
+.welcome__features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  text-align: left;
+  width: 100%;
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  margin-top: var(--space-2);
+}
+
+.welcome__feature {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.welcome__feature-icon {
+  font-size: 20px;
+  color: var(--color-orange);
+  width: 28px;
+  text-align: center;
+}
+
+.welcome__feature p {
+  font-size: 14px;
+  color: var(--color-muted);
+  line-height: 1.4;
+}
+
+@media (max-width: 480px) {
+  .welcome__title { font-size: 36px; }
+  .welcome__tagline { font-size: 16px; }
+}
