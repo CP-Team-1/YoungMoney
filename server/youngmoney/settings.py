@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'accounts',
+    'advisor',
 ]
 
 MIDDLEWARE = [
@@ -185,6 +186,7 @@ REST_FRAMEWORK = {
         'auth-login': '5/min',
         'auth-register': '5/min',
         'auth-refresh': '10/min',
+        'advisor-suggest': '10/min',
     },
 }
 
@@ -242,3 +244,10 @@ DEFAULT_FROM_EMAIL = os.environ.get('DJANGO_DEFAULT_FROM_EMAIL', 'noreply@youngm
 # Base URL of the frontend, used to build links (e.g. email verification)
 # that point at the SPA rather than the API itself.
 FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:5173')
+
+
+# Gemini API (card setup advisor)
+#
+# Not validated at startup — checked lazily in advisor/services.py so the rest
+# of the app keeps working even if this isn't configured yet.
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
