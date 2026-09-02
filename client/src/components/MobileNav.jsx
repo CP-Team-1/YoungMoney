@@ -4,6 +4,7 @@ import './MobileNav.css'
 const NAV = [
   { to: '/dashboard', label: 'Home',  icon: '◈' },
   { to: '/budget',    label: 'Budget', icon: '◫' },
+  { to: '/goals',     label: 'Goals',  icon: '◇' },
   { to: '/spend',     label: 'Spend',  icon: '◎' },
   { to: '/learn',     label: 'Learn',  icon: '◉' },
   { to: '/cards',     label: 'Cards',  icon: '▣' },
