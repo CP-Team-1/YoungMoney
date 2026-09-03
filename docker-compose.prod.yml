@@ -1,0 +1,26 @@
+# Production override. Use alongside the base file:
+#
+#   docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+#
+# This drops the live-reload dev bind mount, runs collectstatic + migrate +
+# gunicorn instead of the dev server, and switches nginx to the TLS config.
+# See DEPLOYMENT.md for required env vars and cert provisioning.
+
+services:
+  backend:
+    command: sh -c "python manage.py collectstatic --noinput && python manage.py migrate && gunicorn youngmoney.wsgi:application --bind 0.0.0.0:8000"
+    volumes: !reset []
+    restart: unless-stopped
+
+  nginx:
+    volumes:
+      - ./nginx/default.prod.conf:/etc/nginx/conf.d/default.conf
+      - ${SSL_CERT_PATH}:/etc/nginx/ssl/fullchain.pem:ro
+      - ${SSL_KEY_PATH}:/etc/nginx/ssl/privkey.pem:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: unless-stopped
+
+  db:
+    restart: unless-stopped
