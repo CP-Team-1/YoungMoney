@@ -8,3 +8,4 @@ gunicorn==26.2.0
 psycopg==3.3.5
 psycopg-binary==3.3.5
 sqlparse==0.6.0
+whitenoise==6.11.0

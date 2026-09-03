@@ -110,3 +110,13 @@ YoungMoney is intended as an educational and decision-support tool, not a substi
                  │ CardAPI  │
                  │ Card Data│
                  └──────────┘
+```
+
+---
+
+## Deployment
+
+For running this stack in production (gunicorn, TLS, static files, secrets),
+see [DEPLOYMENT.md](DEPLOYMENT.md). CI (`.github/workflows/ci.yml`) currently
+runs backend tests and frontend lint/build only — a CD/deploy job isn't
+wired up yet.

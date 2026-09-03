@@ -12,8 +12,7 @@ COPY . .
 
 EXPOSE 8000
 
-# For local development:
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-
-# For production environment
-# CMD ["gunicorn", "config.wsgi", "--bind", "0.0.0.0:8000"]
+# Default CMD is the production server. docker-compose.yml overrides this
+# with `manage.py runserver` for local dev (live reload); the prod compose
+# override (docker-compose.prod.yml) leaves this default in place.
+CMD ["gunicorn", "youngmoney.wsgi:application", "--bind", "0.0.0.0:8000"]
