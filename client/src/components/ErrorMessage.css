@@ -1,0 +1,25 @@
+.error-msg {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  background: rgba(224, 96, 96, 0.1);
+  border: 1px solid rgba(224, 96, 96, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.error-msg__icon {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e06060;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.error-msg__text { font-size: 14px; color: #e06060; line-height: 1.4; }

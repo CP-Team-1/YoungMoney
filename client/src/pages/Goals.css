@@ -1,0 +1,32 @@
+.goals-page { max-width: 1050px; margin: 0 auto; }
+.goals-page__header { margin-bottom: var(--space-8); }
+.goals-page__header h1 { margin: 4px 0 8px; font-size: 34px; }
+.goals-page__header > p:last-child { color: var(--color-muted); }
+.goals-page__eyebrow { color: var(--color-orange); font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.goals-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, .85fr); gap: var(--space-6); align-items: start; }
+.goal-form-card, .saved-goals { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-6); }
+.goal-form-card h2, .saved-goals h2 { margin: 0 0 var(--space-5); font-size: 20px; }
+.goal-form { display: flex; flex-direction: column; gap: var(--space-5); }
+.goal-input { display: flex; flex-direction: column; gap: 7px; }
+.goal-input label { color: var(--color-muted); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.goal-input label span { color: var(--color-orange); }
+.goal-input label small { color: var(--color-subtle); font-size: 10px; margin-left: 5px; }
+.goal-input input, .goal-input select, .goal-input textarea { width: 100%; background: var(--color-surface-alt); border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm); color: var(--color-text); font: inherit; padding: 12px 14px; }
+.goal-input textarea { resize: vertical; }
+.goal-input input:focus, .goal-input select:focus, .goal-input textarea:focus { border-color: var(--color-orange); outline: 2px solid var(--color-orange-dim); }
+.goal-input [aria-invalid="true"] { border-color: var(--color-orange); }
+.goal-input > p, .goal-form__error { color: #f0a17b; font-size: 12px; margin: 0; }
+.goal-form > button { background: var(--color-orange); border: 0; border-radius: var(--radius-full); color: white; cursor: pointer; font: inherit; font-weight: 700; padding: 14px; }
+.goal-form > button:disabled { cursor: wait; opacity: .65; }
+.saved-goals { display: flex; flex-direction: column; gap: var(--space-4); }
+.saved-goals h2 { margin-bottom: var(--space-1); }
+.saved-goals__empty { border: 1px dashed var(--color-border-strong); border-radius: var(--radius-md); color: var(--color-muted); padding: var(--space-8); text-align: center; }
+.saved-goal { display: flex; justify-content: space-between; gap: var(--space-4); background: var(--color-surface-alt); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-5); }
+.saved-goal__type { color: var(--color-sage); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.saved-goal h3 { margin: 5px 0 8px; font-size: 17px; }
+.saved-goal strong { color: var(--color-text); font-size: 20px; }
+.saved-goal p { color: var(--color-muted); line-height: 1.5; margin: 10px 0 0; overflow-wrap: anywhere; white-space: pre-wrap; }
+.saved-goal > button { align-self: flex-start; background: transparent; border: 0; color: var(--color-muted); cursor: pointer; font: inherit; font-size: 12px; padding: 2px; }
+.saved-goal > button:hover { color: var(--color-orange); }
+.saved-goal > button:disabled { cursor: wait; opacity: .6; }
+@media (max-width: 850px) { .goals-layout { grid-template-columns: 1fr; } }

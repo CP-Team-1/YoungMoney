@@ -1,0 +1,66 @@
+.result-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+  padding: var(--space-8);
+}
+
+.result-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-12) var(--space-10);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  text-align: center;
+}
+
+.result-badge {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.result-badge--pass { background: var(--color-sage-dim); color: var(--color-sage); }
+.result-badge--retry { background: var(--color-orange-dim); color: var(--color-orange); }
+
+.result-title { font-size: 28px; font-weight: 700; color: var(--color-text); }
+.result-sub { font-size: 15px; color: var(--color-muted); }
+
+.result-score { display: flex; align-items: baseline; gap: 4px; }
+.result-score__num { font-size: 64px; font-weight: 800; color: var(--color-text); line-height: 1; }
+.result-score__denom { font-size: 24px; color: var(--color-muted); }
+
+.result-hint { font-size: 13px; color: var(--color-subtle); max-width: 280px; line-height: 1.5; }
+
+.result-actions { display: flex; flex-direction: column; gap: var(--space-3); width: 100%; margin-top: var(--space-2); }
+
+.result-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--radius-full);
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-sans);
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.result-btn--primary { background: var(--color-orange); color: #fff; }
+.result-btn--primary:hover { opacity: 0.88; }
+.result-btn--retry { background: var(--color-surface-alt); color: var(--color-text); border: 1px solid var(--color-border-strong); }
+.result-btn--retry:hover { background: var(--color-surface-raised); }

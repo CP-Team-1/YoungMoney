@@ -1,0 +1,19 @@
+.lesson-progress {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.lesson-progress__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-alt);
+  transition: background 0.2s, width 0.2s;
+}
+
+.lesson-progress__dot--done { background: var(--color-sage); }
+.lesson-progress__dot--active {
+  background: var(--color-orange);
+  width: 24px;
+}

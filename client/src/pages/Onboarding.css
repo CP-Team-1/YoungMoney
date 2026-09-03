@@ -1,0 +1,120 @@
+.onboarding {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  background: var(--color-bg);
+}
+
+.onboarding__inner {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.onboarding__step {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-orange);
+}
+
+.onboarding__title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.onboarding__sub {
+  font-size: 16px;
+  color: var(--color-muted);
+  margin-top: calc(-1 * var(--space-3));
+}
+
+.goal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.goal-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+  font-family: var(--font-sans);
+}
+
+.goal-option:hover {
+  border-color: var(--color-orange-border);
+  background: var(--color-orange-dim);
+}
+
+.goal-option--selected {
+  border-color: var(--color-orange);
+  background: var(--color-orange-dim);
+}
+
+.goal-option__icon {
+  font-size: 22px;
+  color: var(--color-orange);
+}
+
+.goal-option__label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.goal-option__desc {
+  font-size: 13px;
+  color: var(--color-muted);
+  line-height: 1.4;
+}
+
+.income-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.onboarding__cta {
+  width: 100%;
+  padding: 16px;
+  background: var(--color-surface-alt);
+  color: var(--color-subtle);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: not-allowed;
+  transition: all 0.15s;
+  font-family: var(--font-sans);
+}
+
+.onboarding__cta--active {
+  background: var(--color-orange);
+  color: #fff;
+  border-color: var(--color-orange);
+  cursor: pointer;
+}
+
+.onboarding__cta--active:hover { opacity: 0.88; }
+
+@media (max-width: 480px) {
+  .goal-grid { grid-template-columns: 1fr; }
+  .onboarding__title { font-size: 26px; }
+}

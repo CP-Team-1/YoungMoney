@@ -1,0 +1,25 @@
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+}
+
+.empty-state__icon { font-size: 40px; color: var(--color-border-strong); }
+.empty-state__title { font-size: 18px; font-weight: 600; color: var(--color-text); }
+.empty-state__msg { font-size: 14px; color: var(--color-muted); max-width: 280px; line-height: 1.5; }
+.empty-state__btn {
+  margin-top: var(--space-2);
+  background: var(--color-orange-dim);
+  border: 1px solid var(--color-orange-border);
+  color: var(--color-orange);
+  border-radius: var(--radius-full);
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+.empty-state__btn:hover { opacity: 0.8; }
