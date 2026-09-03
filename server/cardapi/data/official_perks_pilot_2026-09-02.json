@@ -1,0 +1,130 @@
+{
+  "data": [
+    {
+      "cardapi_slug": "chase-sapphire-reserve-credit-card",
+      "source_url": "https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve",
+      "verified_at": "2026-09-02",
+      "perks": [
+        {"source_key": "airport-lounge-access", "perk_type": "lounge", "name": "Chase Sapphire Lounge and Priority Pass Access", "partner": "Chase and Priority Pass", "enrollment_required": true, "is_complimentary": true, "details": "Access to Chase Sapphire Lounges and 1,300+ Priority Pass lounges with up to two guests."},
+        {"source_key": "ihg-platinum-status", "perk_type": "hotel_status", "name": "IHG One Rewards Platinum Elite Status", "partner": "IHG", "enrollment_required": true, "is_complimentary": true, "expires_on": "2027-12-31"},
+        {"source_key": "primary-rental-coverage", "perk_type": "travel_protection", "name": "Primary Auto Rental Collision Coverage", "coverage_type": "primary", "benefit_limit": 75000, "details": "Coverage for theft and collision damage for most eligible rental vehicles."},
+        {"source_key": "trip-cancellation", "perk_type": "travel_protection", "name": "Trip Cancellation and Interruption Insurance", "benefit_limit": 20000, "details": "Up to $10,000 per covered traveler and $20,000 per trip for qualifying prepaid, non-refundable expenses."},
+        {"source_key": "trip-delay", "perk_type": "travel_protection", "name": "Trip Delay Reimbursement", "benefit_limit": 500, "details": "Eligible delays over six hours or requiring an overnight stay; limit is per covered traveler."},
+        {"source_key": "baggage-delay", "perk_type": "travel_protection", "name": "Baggage Delay Insurance", "benefit_limit": 500, "details": "Up to $100 per day for five days after an eligible delay over six hours."},
+        {"source_key": "dashpass", "perk_type": "membership", "name": "Complimentary DashPass", "partner": "DoorDash", "enrollment_required": true, "is_complimentary": true, "expires_on": "2027-12-31"},
+        {"source_key": "apple-subscriptions", "perk_type": "membership", "name": "Apple TV and Apple Music", "partner": "Apple", "is_complimentary": true, "expires_on": "2027-06-22"}
+      ]
+    },
+    {
+      "cardapi_slug": "chase-sapphire-preferred-credit-card",
+      "source_url": "https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred",
+      "verified_at": "2026-09-02",
+      "perks": [
+        {"source_key": "points-transfer", "perk_type": "transfer", "name": "Airline and Hotel Point Transfers", "details": "Transfer Ultimate Rewards points to participating airline and hotel programs."},
+        {"source_key": "primary-rental-coverage", "perk_type": "travel_protection", "name": "Primary Auto Rental Collision Coverage", "coverage_type": "primary", "benefit_limit": 60000, "details": "Eligible vehicles with an MSRP of $125,000 or less."},
+        {"source_key": "trip-cancellation", "perk_type": "travel_protection", "name": "Trip Cancellation and Interruption Insurance", "benefit_limit": 20000, "details": "Up to $10,000 per covered traveler and $20,000 per trip."},
+        {"source_key": "trip-delay", "perk_type": "travel_protection", "name": "Trip Delay Reimbursement", "benefit_limit": 500, "details": "Eligible delays over 12 hours or requiring an overnight stay; limit is per covered traveler."},
+        {"source_key": "baggage-delay", "perk_type": "travel_protection", "name": "Baggage Delay Insurance", "benefit_limit": 500, "details": "Up to $100 per day for five days after an eligible delay over six hours."},
+        {"source_key": "dashpass", "perk_type": "membership", "name": "Complimentary DashPass", "partner": "DoorDash", "enrollment_required": true, "is_complimentary": true, "expires_on": "2027-12-31"},
+        {"source_key": "apple-tv", "perk_type": "membership", "name": "Complimentary Apple TV", "partner": "Apple", "enrollment_required": true, "is_complimentary": true, "expires_on": "2026-12-31", "details": "One year when activated by the expiration date."}
+      ]
+    },
+    {
+      "cardapi_slug": "chase-freedom-unlimited-credit-card",
+      "source_url": "https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited",
+      "verified_at": "2026-09-02",
+      "perks": [
+        {"source_key": "dashpass", "perk_type": "membership", "name": "Complimentary DashPass", "partner": "DoorDash", "enrollment_required": true, "is_complimentary": true, "expires_on": "2027-12-31", "details": "Six complimentary months, followed by automatic enrollment at the then-current monthly rate unless canceled."},
+        {"source_key": "purchase-protection", "perk_type": "purchase_protection", "name": "Purchase Protection", "benefit_limit": 500, "details": "Eligible new purchases covered against damage or theft, subject to terms."},
+        {"source_key": "extended-warranty", "perk_type": "purchase_protection", "name": "Extended Warranty Protection", "details": "Extends eligible U.S. manufacturer warranties, subject to terms."}
+      ]
+    },
+    {
+      "cardapi_slug": "american-express-gold-card",
+      "source_url": "https://www.americanexpress.com/us/credit-cards/card/gold-card/",
+      "verified_at": "2026-09-02",
+      "perks": [
+        {"source_key": "hotel-collection", "perk_type": "hotel", "name": "The Hotel Collection Benefits", "partner": "American Express Travel", "details": "Eligible stays of at least two nights can receive on-property benefits; availability and terms apply."},
+        {"source_key": "car-rental-loss-damage", "perk_type": "travel_protection", "name": "Car Rental Loss and Damage Insurance", "coverage_type": "secondary", "details": "Coverage may apply when the eligible rental is paid with the card and the rental company's collision waiver is declined."},
+        {"source_key": "baggage-insurance", "perk_type": "travel_protection", "name": "Baggage Insurance Plan", "details": "Coverage for eligible lost, damaged, or stolen baggage; limits and exclusions apply."},
+        {"source_key": "purchase-protection", "perk_type": "purchase_protection", "name": "Purchase Protection", "details": "Coverage for eligible purchases against accidental damage or theft, subject to terms."}
+      ]
+    },
+    {
+      "cardapi_slug": "american-express-platinum-card",
+      "source_url": "https://www.americanexpress.com/us/credit-cards/card/platinum/",
+      "verified_at": "2026-09-02",
+      "perks": [
+        {"source_key": "global-lounge-collection", "perk_type": "lounge", "name": "Global Lounge Collection", "partner": "American Express", "enrollment_required": true, "is_complimentary": true, "details": "Access to participating Centurion, Priority Pass, Delta Sky Club, and other select lounges; individual access limits apply."},
+        {"source_key": "marriott-gold", "perk_type": "hotel_status", "name": "Marriott Bonvoy Gold Elite Status", "partner": "Marriott", "enrollment_required": true, "is_complimentary": true},
+        {"source_key": "hilton-gold", "perk_type": "hotel_status", "name": "Hilton Honors Gold Status", "partner": "Hilton", "enrollment_required": true, "is_complimentary": true},
+        {"source_key": "leaders-club-sterling", "perk_type": "hotel_status", "name": "Leaders Club Sterling Status", "partner": "Leading Hotels of the World", "enrollment_required": true, "is_complimentary": true},
+        {"source_key": "trip-cancellation", "perk_type": "travel_protection", "name": "Trip Cancellation and Interruption Insurance", "details": "Coverage for qualifying prepaid, non-refundable travel expenses; limits and exclusions apply."},
+        {"source_key": "trip-delay", "perk_type": "travel_protection", "name": "Trip Delay Insurance", "details": "Coverage for qualifying delays; limits and exclusions apply."},
+        {"source_key": "car-rental-loss-damage", "perk_type": "travel_protection", "name": "Car Rental Loss and Damage Insurance", "coverage_type": "secondary", "details": "Coverage may apply when the eligible rental is paid with the card and the rental company's collision waiver is declined."},
+        {"source_key": "return-protection", "perk_type": "purchase_protection", "name": "Return Protection", "benefit_limit": 300, "details": "Up to $300 per eligible item and $1,000 per calendar year, subject to terms."}
+      ]
+    },
+    {
+      "cardapi_slug": "capital-one-venture-x",
+      "source_url": "https://www.capitalone.com/credit-cards/venture-x/",
+      "verified_at": "2026-09-02",
+      "perks": [
+        {"source_key": "anniversary-miles", "perk_type": "anniversary_bonus", "name": "10,000 Anniversary Miles", "period": "annual", "is_complimentary": true, "details": "Awarded each account anniversary starting with the first anniversary."},
+        {"source_key": "airport-lounge-access", "perk_type": "lounge", "name": "Capital One Lounge and Priority Pass Access", "partner": "Capital One and Priority Pass", "enrollment_required": true, "is_complimentary": true},
+        {"source_key": "points-transfer", "perk_type": "transfer", "name": "Capital One Miles Transfers", "details": "Transfer miles to participating travel loyalty programs; ratios vary."},
+        {"source_key": "travel-protections", "perk_type": "travel_protection", "name": "Visa Infinite Travel Protections", "details": "Eligible travel protections are governed by the current guide to benefits."}
+      ]
+    },
+    {
+      "cardapi_slug": "savor-rewards-from-capital-one",
+      "source_url": "https://www.capitalone.com/credit-cards/cash-back/savor/",
+      "verified_at": "2026-09-02",
+      "perks": [{"source_key": "capital-one-entertainment", "perk_type": "entertainment_access", "name": "Capital One Entertainment Access", "partner": "Capital One", "details": "Access to eligible ticketing and entertainment experiences; availability and pricing vary."}]
+    },
+    {
+      "local_slug": "capital-one-savor-rewards-good-credit",
+      "source_url": "https://www.capitalone.com/credit-cards/cash-back/savor/",
+      "verified_at": "2026-09-02",
+      "perks": [{"source_key": "capital-one-entertainment", "perk_type": "entertainment_access", "name": "Capital One Entertainment Access", "partner": "Capital One", "details": "Access to eligible ticketing and entertainment experiences; availability and pricing vary."}]
+    },
+    {
+      "cardapi_slug": "capital-one-savor-one-credit-card",
+      "source_url": "https://www.capitalone.com/credit-cards/cash-back/savor/",
+      "verified_at": "2026-09-02",
+      "perks": [{"source_key": "capital-one-entertainment", "perk_type": "entertainment_access", "name": "Capital One Entertainment Access", "partner": "Capital One", "details": "Access to eligible ticketing and entertainment experiences; availability and pricing vary."}]
+    },
+    {
+      "cardapi_slug": "capital-one-savor-rewards-for-students",
+      "source_url": "https://www.capitalone.com/credit-cards/savor-student/",
+      "verified_at": "2026-09-02",
+      "perks": [{"source_key": "capital-one-entertainment", "perk_type": "entertainment_access", "name": "Capital One Entertainment Access", "partner": "Capital One", "details": "Access to eligible ticketing and entertainment experiences; availability and pricing vary."}]
+    },
+    {
+      "cardapi_slug": "citi-strata-premier-card",
+      "source_url": "https://www.citi.com/credit-cards/citi-strata-premier-credit-card",
+      "verified_at": "2026-09-02",
+      "perks": [
+        {"source_key": "points-transfer", "perk_type": "transfer", "name": "ThankYou Point Transfers", "details": "Transfer points to participating airline and hotel loyalty programs."},
+        {"source_key": "citi-entertainment", "perk_type": "entertainment_access", "name": "Citi Entertainment Access", "partner": "Citi", "details": "Access to eligible presale tickets and experiences; availability and pricing vary."}
+      ]
+    },
+    {
+      "cardapi_slug": "citi-double-cash-credit-card",
+      "source_url": "https://www.citi.com/credit-cards/personal/double-cash",
+      "verified_at": "2026-09-02",
+      "perks": [{"source_key": "citi-entertainment", "perk_type": "entertainment_access", "name": "Citi Entertainment Access", "partner": "Citi", "details": "Access to eligible presale tickets and experiences; availability and pricing vary."}]
+    },
+    {
+      "cardapi_slug": "wells-fargo-autograph-card",
+      "source_url": "https://creditcards.wellsfargo.com/autograph-visa-credit-card/",
+      "verified_at": "2026-09-02",
+      "perks": [
+        {"source_key": "cell-phone-protection", "perk_type": "protection", "name": "Cellular Telephone Protection", "benefit_limit": 600, "details": "Up to $600 per approved claim against covered damage or theft, with a $25 deductible and a maximum of two paid claims per 12 months."},
+        {"source_key": "rental-collision", "perk_type": "travel_protection", "name": "Auto Rental Collision Damage Waiver", "coverage_type": "secondary", "details": "Coverage for eligible rental theft or damage when terms are satisfied."},
+        {"source_key": "visa-luxury-hotels", "perk_type": "hotel", "name": "Visa Signature Luxury Hotel Collection", "partner": "Visa", "details": "Access to participating hotel benefits; availability and restrictions apply."},
+        {"source_key": "points-transfer", "perk_type": "transfer", "name": "Wells Fargo Rewards Point Transfers", "details": "Transfer points to participating travel loyalty programs."}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+.expense-entry {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.expense-entry:last-child { border-bottom: none; }
+
+.expense-entry__dot {
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  border-radius: 50%;
+}
+
+.expense-entry__info { flex: 1; }
+.expense-entry__merchant { font-size: 14px; font-weight: 600; color: var(--color-text); }
+.expense-entry__category {
+  font-size: 12px;
+  color: var(--color-muted);
+  text-transform: capitalize;
+  margin-top: 2px;
+}
+
+.expense-entry__right { text-align: right; }
+.expense-entry__amount { font-size: 14px; font-weight: 700; color: var(--color-text); }
+.expense-entry__date { font-size: 12px; color: var(--color-subtle); margin-top: 2px; }

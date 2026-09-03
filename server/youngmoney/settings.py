@@ -59,6 +59,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'accounts',
     'advisor',
+    'cardapi',
+    'goals',
 ]
 
 MIDDLEWARE = [

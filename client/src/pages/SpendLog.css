@@ -1,0 +1,35 @@
+.spend-log { max-width: 640px; display: flex; flex-direction: column; gap: var(--space-6); }
+
+.spend-log__header { display: flex; justify-content: space-between; align-items: center; }
+.spend-log__title { font-size: 32px; font-weight: 700; color: var(--color-text); }
+.spend-log__total { font-size: 24px; font-weight: 700; color: var(--color-orange); }
+
+.spend-log__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.spend-filter {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: capitalize;
+  font-family: var(--font-sans);
+  transition: all 0.15s;
+}
+
+.spend-filter:hover { border-color: var(--color-border-strong); color: var(--color-text); }
+.spend-filter--active { background: var(--color-orange-dim); border-color: var(--color-orange-border); color: var(--color-orange); }
+
+.spend-log__list {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2) var(--space-5);
+}

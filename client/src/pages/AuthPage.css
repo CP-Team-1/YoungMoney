@@ -1,0 +1,109 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  background: var(--color-bg);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-10);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.auth-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  margin-bottom: var(--space-2);
+}
+
+.auth-logo__mark {
+  width: 32px;
+  height: 32px;
+  background: var(--color-orange);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 16px;
+  color: #fff;
+}
+
+.auth-logo__text {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.auth-heading {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.auth-sub {
+  font-size: 14px;
+  color: var(--color-muted);
+  margin-top: calc(-1 * var(--space-3));
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.auth-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.auth-submit {
+  width: 100%;
+  padding: 14px;
+  background: var(--color-orange);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: opacity 0.15s;
+  margin-top: var(--space-2);
+}
+
+.auth-submit:hover:not(:disabled) { opacity: 0.88; }
+.auth-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.auth-switch {
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.auth-switch__link {
+  color: var(--color-orange);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-switch__link:hover { opacity: 0.8; }
+
+@media (max-width: 480px) {
+  .auth-card { padding: var(--space-8) var(--space-6); }
+  .auth-form__row { grid-template-columns: 1fr; }
+}
