@@ -10,6 +10,9 @@ services:
   backend:
     command: sh -c "python manage.py collectstatic --noinput && python manage.py migrate && gunicorn youngmoney.wsgi:application --bind 0.0.0.0:8000"
     volumes: !reset []
+    # Reachable by nginx on the internal Compose network only. Do not publish
+    # Django directly on the production host and bypass TLS/reverse-proxying.
+    ports: !reset []
     restart: unless-stopped
 
   nginx:
@@ -23,4 +26,7 @@ services:
     restart: unless-stopped
 
   db:
+    # Reachable by Django on the internal Compose network only. PostgreSQL
+    # must not be published on the production host.
+    ports: !reset []
     restart: unless-stopped
