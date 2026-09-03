@@ -1,0 +1,201 @@
+{
+  "data": [
+    {
+      "cardapi_slug": "aaadvantage-aviator-red-world-elite-mastercard",
+      "source_url": "https://www.nerdwallet.com/credit-cards/reviews/aadvantage-aviator-red",
+      "verified_at": "2026-09-03",
+      "fields": {
+        "is_discontinued": true
+      }
+    },
+    {
+      "cardapi_slug": "aadvantage-aviator-world-elite-business-mastercard",
+      "source_url": "https://www.nerdwallet.com/credit-cards/news/barclays-aadvantage-aviator-cards-close-to-new-applicants",
+      "verified_at": "2026-09-03",
+      "fields": {
+        "is_discontinued": true
+      }
+    },
+    {
+      "cardapi_slug": "american-express-marriott-bonvoy-card",
+      "source_url": "https://thepointsguy.com/news/marriott-bonvoy-card-overhaul",
+      "verified_at": "2026-09-03",
+      "fields": {
+        "is_discontinued": true
+      }
+    },
+    {
+      "cardapi_slug": "american-express-simplycash-plus-business-card",
+      "source_url": "https://www.americanexpress.com/us/business/credit-cards/simplycash-plus-vs-blue-business-cash/",
+      "verified_at": "2026-09-03",
+      "fields": {
+        "is_discontinued": true
+      }
+    },
+    {
+      "cardapi_slug": "amazon-prime-visa",
+      "source_url": "https://creditcards.chase.com/cash-back-credit-cards/amazon-prime-rewards",
+      "verified_at": "2026-09-03",
+      "fields": {
+        "annual_fee": 0,
+        "foreign_transaction_fee": 0
+      },
+      "reward_rates": [
+        {"source_key": "official-online-shopping-2026-09-03", "category_slug": "online_shopping", "rate_multiplier": 5, "rate_type": "percent_cashback", "notes": "Amazon.com purchases."},
+        {"source_key": "official-groceries-2026-09-03", "category_slug": "groceries", "rate_multiplier": 5, "rate_type": "percent_cashback", "notes": "Whole Foods Market purchases."},
+        {"source_key": "official-travel-2026-09-03", "category_slug": "travel", "rate_multiplier": 5, "rate_type": "percent_cashback", "booking_channel": "issuer_portal", "booking_portal": "Chase Travel", "notes": "Chase Travel purchases."},
+        {"source_key": "official-gas-2026-09-03", "category_slug": "gas", "rate_multiplier": 2, "rate_type": "percent_cashback"},
+        {"source_key": "official-dining-2026-09-03", "category_slug": "dining", "rate_multiplier": 2, "rate_type": "percent_cashback"},
+        {"source_key": "official-transit-2026-09-03", "category_slug": "transit", "rate_multiplier": 2, "rate_type": "percent_cashback", "notes": "Local transit and commuting, including rideshare."},
+        {"source_key": "official-base-2026-09-03", "category_slug": "other", "rate_multiplier": 1, "rate_type": "percent_cashback", "is_base_rate": true}
+      ],
+      "signup_bonuses": [
+        {"source_key": "official-offer-2026-09-03", "offer_text": "$150 Amazon Gift Card instantly loaded into your Amazon account's Gift Card Balance on approval, for Prime members.", "bonus_amount": 150, "bonus_unit": "cash"}
+      ]
+    },
+    {
+      "cardapi_slug": "amazon-visa",
+      "source_url": "https://creditcards.chase.com/cash-back-credit-cards/amazon-rewards",
+      "verified_at": "2026-09-03",
+      "fields": {
+        "annual_fee": 0,
+        "foreign_transaction_fee": 0
+      },
+      "reward_rates": [
+        {"source_key": "official-online-shopping-2026-09-03", "category_slug": "online_shopping", "rate_multiplier": 3, "rate_type": "percent_cashback", "notes": "Amazon.com and Audible.com purchases."},
+        {"source_key": "official-groceries-2026-09-03", "category_slug": "groceries", "rate_multiplier": 3, "rate_type": "percent_cashback", "notes": "Whole Foods Market purchases."},
+        {"source_key": "official-travel-2026-09-03", "category_slug": "travel", "rate_multiplier": 3, "rate_type": "percent_cashback", "booking_channel": "issuer_portal", "booking_portal": "Chase Travel", "notes": "Chase Travel purchases."},
+        {"source_key": "official-gas-2026-09-03", "category_slug": "gas", "rate_multiplier": 2, "rate_type": "percent_cashback"},
+        {"source_key": "official-dining-2026-09-03", "category_slug": "dining", "rate_multiplier": 2, "rate_type": "percent_cashback"},
+        {"source_key": "official-transit-2026-09-03", "category_slug": "transit", "rate_multiplier": 2, "rate_type": "percent_cashback", "notes": "Local transit and commuting, including rideshare."},
+        {"source_key": "official-base-2026-09-03", "category_slug": "other", "rate_multiplier": 1, "rate_type": "percent_cashback", "is_base_rate": true}
+      ],
+      "signup_bonuses": [
+        {"source_key": "official-offer-2026-09-03", "offer_text": "$50 Amazon Gift Card instantly loaded into your Amazon account's Gift Card Balance on approval of your credit card application.", "bonus_amount": 50, "bonus_unit": "cash"}
+      ]
+    },
+    {
+      "cardapi_slug": "american-express-blue-business-cash-card",
+      "source_url": "https://www.americanexpress.com/en-us/business/credit-cards/blue-business-cash/",
+      "verified_at": "2026-09-03",
+      "fields": {
+        "annual_fee": 0,
+        "foreign_transaction_fee": 2.7
+      },
+      "reward_rates": [
+        {"source_key": "official-base-2026-09-03", "category_slug": "other", "rate_multiplier": 2, "rate_type": "percent_cashback", "is_base_rate": true, "cap_amount": 50000, "cap_period": "annual", "fallback_rate": 1, "notes": "2% cash back on up to $50,000 in combined purchases per calendar year, then 1% thereafter."}
+      ]
+    },
+    {
+      "cardapi_slug": "american-express-blue-business-plus-card",
+      "source_url": "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/bluebusinessplus-credit-card/42732-9-0",
+      "verified_at": "2026-09-03",
+      "fields": {
+        "annual_fee": 0,
+        "foreign_transaction_fee": 2.7
+      },
+      "reward_rates": [
+        {"source_key": "official-base-2026-09-03", "category_slug": "other", "rate_multiplier": 2, "rate_type": "points_per_dollar", "is_base_rate": true, "cap_amount": 50000, "cap_period": "annual", "fallback_rate": 1, "notes": "2X points on the first $50,000 in eligible purchases per calendar year, then 1X thereafter."},
+        {"source_key": "official-travel-2026-09-03", "category_slug": "travel", "rate_multiplier": 2, "rate_type": "points_per_dollar", "booking_channel": "issuer_portal", "booking_portal": "Amex Travel", "notes": "Prepaid hotels, car rentals, flights, and cruises booked through AmexTravel.com or the Amex Travel App; excluded from the $50,000 annual cap."}
+      ],
+      "signup_bonuses": [
+        {"source_key": "official-offer-2026-09-03", "offer_text": "Earn 15,000 Membership Rewards points after you spend $3,000 or more in eligible purchases on the Card within your first 3 months of Card Membership.", "bonus_amount": 15000, "bonus_unit": "points", "reward_program_code": "amex-membership-rewards", "minimum_spend": 3000, "minimum_spend_months": 3}
+      ],
+      "statement_credits": [
+        {"source_key": "official-venue-collection-2026-09-03", "name": "American Express Venue Collection Concessions Credit", "amount": 250, "period": "annual", "eligible_merchants": "Qualifying food and beverage concessions purchases at stadiums and arenas", "enrollment_required": true, "notes": "10% back, up to $250/year; promotional offer stated as ending 12/31/2026."}
+      ]
+    },
+    {
+      "cardapi_slug": "american-express-business-gold-card",
+      "source_url": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-gold-card-amex/",
+      "verified_at": "2026-09-03",
+      "fields": {
+        "annual_fee": 375,
+        "foreign_transaction_fee": 0
+      },
+      "reward_rates": [
+        {"source_key": "official-base-2026-09-03", "category_slug": "other", "rate_multiplier": 1, "rate_type": "points_per_dollar", "is_base_rate": true},
+        {"source_key": "official-travel-2026-09-03", "category_slug": "travel", "rate_multiplier": 3, "rate_type": "points_per_dollar", "booking_channel": "issuer_portal", "booking_portal": "Amex Travel", "notes": "Flights and prepaid hotels booked via AmexTravel.com."},
+        {"source_key": "official-dining-2026-09-03", "category_slug": "dining", "rate_multiplier": 4, "rate_type": "points_per_dollar", "cap_amount": 150000, "cap_period": "annual", "fallback_rate": 1, "notes": "4X applies only when U.S. restaurants are one of the top 2 spend categories that billing cycle, recalculated monthly; shared $150,000/year combined cap across all 6 eligible categories, then 1X."},
+        {"source_key": "official-gas-2026-09-03", "category_slug": "gas", "rate_multiplier": 4, "rate_type": "points_per_dollar", "cap_amount": 150000, "cap_period": "annual", "fallback_rate": 1, "notes": "4X applies only when U.S. gas stations are one of the top 2 spend categories that billing cycle, recalculated monthly; shared $150,000/year combined cap across all 6 eligible categories, then 1X."},
+        {"source_key": "official-transit-2026-09-03", "category_slug": "transit", "rate_multiplier": 4, "rate_type": "points_per_dollar", "cap_amount": 150000, "cap_period": "annual", "fallback_rate": 1, "notes": "4X applies only when transit is one of the top 2 spend categories that billing cycle, recalculated monthly; shared $150,000/year combined cap across all 6 eligible categories, then 1X."},
+        {"source_key": "official-phone-2026-09-03", "category_slug": "phone_plans", "rate_multiplier": 4, "rate_type": "points_per_dollar", "cap_amount": 150000, "cap_period": "annual", "fallback_rate": 1, "notes": "4X applies only when U.S. wireless telephone service is one of the top 2 spend categories that billing cycle, recalculated monthly; shared $150,000/year combined cap across all 6 eligible categories, then 1X. Two additional eligible categories (U.S. advertising, U.S. electronics/software/cloud) do not map to this app's category taxonomy and are omitted."}
+      ],
+      "statement_credits": [
+        {"source_key": "official-flex-credit-2026-09-03", "name": "Flexible Business Credit", "amount": 20, "period": "monthly", "eligible_merchants": "FedEx, Grubhub, Office Supply Stores", "enrollment_required": true, "notes": "Up to $20/month, up to $240/year combined; FedEx portion valid through 10/01/2026."},
+        {"source_key": "official-chatgpt-credit-2026-09-03", "name": "ChatGPT Business Credit", "amount": 300, "period": "annual", "eligible_merchants": "ChatGPT Business subscription purchases (US)", "enrollment_required": true},
+        {"source_key": "official-squarespace-credit-2026-09-03", "name": "Squarespace Credit", "amount": 150, "period": "annual", "eligible_merchants": "Squarespace purchases (US)", "enrollment_required": true},
+        {"source_key": "official-walmart-credit-2026-09-03", "name": "Walmart+ Membership Credit", "amount": 12.95, "period": "monthly", "eligible_merchants": "Walmart+ membership", "enrollment_required": true, "notes": "Covers one monthly Walmart+ membership; auto-renewal required."}
+      ]
+    },
+    {
+      "cardapi_slug": "american-express-business-green-card",
+      "source_url": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-green-card-amex/",
+      "verified_at": "2026-09-03",
+      "fields": {
+        "annual_fee": 95,
+        "foreign_transaction_fee": 2.7
+      },
+      "reward_rates": [
+        {"source_key": "official-base-2026-09-03", "category_slug": "other", "rate_multiplier": 1, "rate_type": "points_per_dollar", "is_base_rate": true},
+        {"source_key": "official-travel-2026-09-03", "category_slug": "travel", "rate_multiplier": 2, "rate_type": "points_per_dollar", "booking_channel": "issuer_portal", "booking_portal": "Amex Travel", "notes": "Flights and prepaid hotels booked via AmexTravel.com or the Amex Travel App."}
+      ]
+    },
+    {
+      "cardapi_slug": "american-express-marriott-bonvoy-business-card",
+      "source_url": "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/marriott-bonvoy-business-american-express-card/42732-9-0",
+      "verified_at": "2026-09-03",
+      "fields": {
+        "annual_fee": 125,
+        "foreign_transaction_fee": 0
+      },
+      "reward_rates": [
+        {"source_key": "official-base-2026-09-03", "category_slug": "other", "rate_multiplier": 2, "rate_type": "points_per_dollar", "is_base_rate": true},
+        {"source_key": "official-hotels-2026-09-03", "category_slug": "hotels", "rate_multiplier": 6, "rate_type": "points_per_dollar", "notes": "Marriott Bonvoy hotel purchases; card's own multiplier, before Marriott Bonvoy member/elite earning bonuses."},
+        {"source_key": "official-dining-2026-09-03", "category_slug": "dining", "rate_multiplier": 4, "rate_type": "points_per_dollar", "notes": "Restaurants worldwide."},
+        {"source_key": "official-gas-2026-09-03", "category_slug": "gas", "rate_multiplier": 4, "rate_type": "points_per_dollar", "notes": "U.S. gas stations."},
+        {"source_key": "official-phone-2026-09-03", "category_slug": "phone_plans", "rate_multiplier": 4, "rate_type": "points_per_dollar", "notes": "U.S. wireless telephone service purchased directly from service providers."}
+      ],
+      "signup_bonuses": [
+        {"source_key": "official-offer-2026-09-03", "offer_text": "Earn up to 125,000 Marriott Bonvoy points: 75,000 points after you spend $6,000 or more in eligible purchases in the first 6 months of Card Membership, plus an additional 50,000 points after you spend a total of $9,000 in eligible purchases in the first 6 months.", "bonus_amount": 125000, "bonus_unit": "points", "reward_program_code": "marriott-bonvoy", "minimum_spend": 9000, "minimum_spend_months": 6}
+      ],
+      "statement_credits": [
+        {"source_key": "official-venue-collection-2026-09-03", "name": "American Express Venue Collection Concessions Credit", "amount": 250, "period": "annual", "eligible_merchants": "Qualifying food and beverage concessions purchases at stadiums and arenas", "enrollment_required": true, "notes": "10% back, up to $250/year (general Amex Venue Collection benefit, not exclusive to this card)."}
+      ]
+    },
+    {
+      "cardapi_slug": "amtrak-guest-rewards-mastercard",
+      "source_url": "https://www.card.fnbo.com/amtrakguestrewards/apply",
+      "verified_at": "2026-09-03",
+      "fields": {
+        "annual_fee": 0,
+        "foreign_transaction_fee": 0
+      },
+      "reward_rates": [
+        {"source_key": "official-base-2026-09-03", "category_slug": "other", "rate_multiplier": 1, "rate_type": "points_per_dollar", "is_base_rate": true},
+        {"source_key": "official-transit-2026-09-03", "category_slug": "transit", "rate_multiplier": 2, "rate_type": "points_per_dollar", "notes": "Amtrak train travel, including onboard purchases."},
+        {"source_key": "official-dining-2026-09-03", "category_slug": "dining", "rate_multiplier": 2, "rate_type": "points_per_dollar"}
+      ],
+      "signup_bonuses": [
+        {"source_key": "official-offer-2026-09-03", "offer_text": "Earn 15,000 points after spending $1,000, plus 5,000 points after adding an authorized user, all within the first 3 billing cycles of account opening (up to 20,000 bonus points total).", "bonus_amount": 15000, "bonus_unit": "points", "minimum_spend": 1000, "minimum_spend_months": 3}
+      ]
+    },
+    {
+      "cardapi_slug": "aer-lingus-visa-signature-credit-card",
+      "source_url": "https://creditcards.chase.com/travel-credit-cards/avios/aer-lingus",
+      "verified_at": "2026-09-03",
+      "fields": {
+        "annual_fee": 95,
+        "foreign_transaction_fee": 0
+      },
+      "reward_rates": [
+        {"source_key": "official-base-2026-09-03", "category_slug": "other", "rate_multiplier": 1, "rate_type": "points_per_dollar", "is_base_rate": true},
+        {"source_key": "official-flights-2026-09-03", "category_slug": "flights", "rate_multiplier": 3, "rate_type": "points_per_dollar", "notes": "Aer Lingus, British Airways, Iberia, and LEVEL flight purchases."},
+        {"source_key": "official-hotels-2026-09-03", "category_slug": "hotels", "rate_multiplier": 2, "rate_type": "points_per_dollar", "notes": "Hotel accommodations booked directly with the hotel."}
+      ],
+      "signup_bonuses": [
+        {"source_key": "official-offer-2026-09-03", "offer_text": "Earn 75,000 Bonus Avios after you spend $5,000 on purchases within the first 3 months of account opening.", "bonus_amount": 75000, "bonus_unit": "points", "reward_program_code": "aer-lingus-aerclub", "minimum_spend": 5000, "minimum_spend_months": 3}
+      ]
+    }
+  ]
+}
