@@ -16,7 +16,7 @@ from cardapi.models import (
 )
 
 
-DEFAULT_SNAPSHOT = "cardapi/data/catalog_snapshot_2026-09-02.json"
+DEFAULT_SNAPSHOT = "cardapi/data/catalog_snapshot_2026-09-03.json"
 
 
 class Command(BaseCommand):

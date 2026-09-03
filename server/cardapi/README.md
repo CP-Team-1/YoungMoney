@@ -46,7 +46,7 @@ catalog snapshot:
 docker compose up -d db backend
 docker compose exec backend python manage.py migrate
 docker compose exec backend python manage.py restore_cardapi_snapshot \
-  cardapi/data/catalog_snapshot_2026-09-02.json --confirm-replace
+  cardapi/data/catalog_snapshot_2026-09-03.json --confirm-replace
 docker compose exec backend python manage.py check
 docker compose exec backend python manage.py test cardapi
 ```
@@ -342,7 +342,7 @@ rate set rather than only the corrected row.
 ## Database-independent catalog backup
 
 The reviewed JSON files remain the editable source of truth for official data.
-In addition, `data/catalog_snapshot_2026-09-02.json` is a Django fixture of the
+In addition, `data/catalog_snapshot_2026-09-03.json` is a Django fixture of the
 entire `cardapi` app catalog, including the CardAPI rows that were initially
 fetched, stable external IDs, inactive history, reward programs, memberships,
 and transfer routes. It contains no API key or user data.
@@ -353,7 +353,7 @@ requests:
 ```bash
 python manage.py migrate
 python manage.py restore_cardapi_snapshot \
-  cardapi/data/catalog_snapshot_2026-09-02.json --confirm-replace
+  cardapi/data/catalog_snapshot_2026-09-03.json --confirm-replace
 ```
 
 Refresh the snapshot after reviewed catalog changes:
