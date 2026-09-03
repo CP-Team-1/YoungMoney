@@ -26,3 +26,9 @@
 
 .mobile-nav__icon { font-size: 18px; }
 .mobile-nav__label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+
+@media (min-width: 768px) {
+  .mobile-nav {
+    display: none;
+  }
+}

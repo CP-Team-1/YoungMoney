@@ -1,0 +1,42 @@
+{
+  "data": [
+    {
+      "cardapi_slug": "aeroplan-card",
+      "source_url": "https://creditcards.chase.com/travel-credit-cards/aircanada/aeroplan",
+      "verified_at": "2026-09-02",
+      "reward_rates": [
+        {
+          "source_key": "chase-aeroplan-dining-3x-2026-09-02",
+          "category_slug": "dining",
+          "rate_multiplier": 3,
+          "rate_type": "points_per_dollar",
+          "notes": "Earn 3X points on dining, including takeout and eligible delivery services."
+        },
+        {
+          "source_key": "chase-aeroplan-groceries-3x-2026-09-02",
+          "category_slug": "groceries",
+          "rate_multiplier": 3,
+          "rate_type": "points_per_dollar",
+          "notes": "Earn 3X points at grocery stores."
+        },
+        {
+          "source_key": "chase-aeroplan-air-canada-3x-2026-09-02",
+          "category_slug": "travel",
+          "rate_multiplier": 3,
+          "rate_type": "points_per_dollar",
+          "booking_channel": "direct",
+          "merchant_scope": "Purchases made directly with Air Canada",
+          "notes": "Earn 3X points on purchases made directly with Air Canada."
+        },
+        {
+          "source_key": "chase-aeroplan-base-1x-2026-09-02",
+          "category_slug": "other",
+          "rate_multiplier": 1,
+          "rate_type": "points_per_dollar",
+          "is_base_rate": true,
+          "notes": "Earn 1X point on all other purchases."
+        }
+      ]
+    }
+  ]
+}

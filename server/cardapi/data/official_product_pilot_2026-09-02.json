@@ -1,0 +1,221 @@
+{
+  "data": [
+    {
+      "cardapi_slug": "chase-sapphire-reserve-credit-card",
+      "source_url": "https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve",
+      "verified_at": "2026-09-02",
+      "fields": {"annual_fee": 795, "foreign_transaction_fee": 0, "is_discontinued": false},
+      "reward_rates": [
+        {"source_key": "official-chase-travel", "category_slug": "travel", "rate_multiplier": 8, "rate_type": "points_per_dollar", "booking_channel": "issuer_portal", "booking_portal": "Chase Travel", "notes": "Purchases through Chase Travel."},
+        {"source_key": "official-direct-flights", "category_slug": "flights", "rate_multiplier": 4, "rate_type": "points_per_dollar", "booking_channel": "direct", "notes": "Flights booked directly."},
+        {"source_key": "official-direct-hotels", "category_slug": "hotels", "rate_multiplier": 4, "rate_type": "points_per_dollar", "booking_channel": "direct", "notes": "Hotels booked directly."},
+        {"source_key": "official-dining", "category_slug": "dining", "rate_multiplier": 3, "rate_type": "points_per_dollar"},
+        {"source_key": "official-base", "category_slug": "other", "rate_multiplier": 1, "rate_type": "points_per_dollar", "is_base_rate": true}
+      ],
+      "signup_bonuses": [{"source_key": "public-offer-2026-09-02", "offer_text": "Earn 100,000 points after spending $6,000 in purchases in the first 3 months from account opening.", "bonus_amount": 100000, "bonus_unit": "points", "minimum_spend": 6000, "minimum_spend_months": 3}],
+      "statement_credits": [
+        {"source_key": "annual-travel-credit", "name": "Annual Travel Credit", "amount": 300, "period": "annual", "eligible_merchants": "Qualifying travel purchases"},
+        {"source_key": "the-edit-credit", "name": "The Edit Hotel Credit", "amount": 500, "period": "annual", "eligible_merchants": "Eligible prepaid bookings with The Edit through Chase Travel", "notes": "Up to $250 per booking; two-night minimum."},
+        {"source_key": "sapphire-tables-credit", "name": "Sapphire Exclusive Tables Dining Credit", "amount": 300, "period": "annual", "eligible_merchants": "Participating Sapphire Exclusive Tables restaurants on OpenTable", "notes": "Up to $150 January-June and $150 July-December."},
+        {"source_key": "trusted-traveler-credit", "name": "Global Entry, TSA PreCheck, or NEXUS Credit", "amount": 120, "eligible_merchants": "Eligible application fee", "notes": "One credit every four years."}
+      ],
+      "perks": [{"source_key": "airport-lounge-access", "perk_type": "lounge", "name": "Chase Sapphire Lounge and Priority Pass Access", "partner": "Chase and Priority Pass", "details": "Complimentary access to Chase Sapphire Lounges and 1,300+ Priority Pass lounges, with up to two guests."}]
+    },
+    {
+      "cardapi_slug": "capital-one-venture-x",
+      "source_url": "https://www.capitalone.com/credit-cards/venture-x/",
+      "verified_at": "2026-09-02",
+      "fields": {"annual_fee": 395, "foreign_transaction_fee": 0, "is_discontinued": false},
+      "reward_rates": [
+        {"source_key": "official-portal-hotels", "category_slug": "hotels", "rate_multiplier": 10, "rate_type": "points_per_dollar", "booking_channel": "issuer_portal", "booking_portal": "Capital One Travel"},
+        {"source_key": "official-portal-car-rentals", "category_slug": "car_rentals", "rate_multiplier": 10, "rate_type": "points_per_dollar", "booking_channel": "issuer_portal", "booking_portal": "Capital One Travel"},
+        {"source_key": "official-portal-flights", "category_slug": "flights", "rate_multiplier": 5, "rate_type": "points_per_dollar", "booking_channel": "issuer_portal", "booking_portal": "Capital One Travel"},
+        {"source_key": "official-portal-vacation-rentals", "category_slug": "vacation_rentals", "rate_multiplier": 5, "rate_type": "points_per_dollar", "booking_channel": "issuer_portal", "booking_portal": "Capital One Travel"},
+        {"source_key": "official-base", "category_slug": "other", "rate_multiplier": 2, "rate_type": "points_per_dollar", "is_base_rate": true}
+      ],
+      "signup_bonuses": [{"source_key": "public-offer-2026-09-02", "offer_text": "Earn 75,000 bonus miles after spending $4,000 on purchases within the first 3 months from account opening.", "bonus_amount": 75000, "bonus_unit": "miles", "minimum_spend": 4000, "minimum_spend_months": 3}],
+      "statement_credits": [{"source_key": "capital-one-travel-credit", "name": "Capital One Travel Credit", "amount": 300, "period": "annual", "eligible_merchants": "Bookings through Capital One Travel"}],
+      "perks": [
+        {"source_key": "anniversary-miles", "perk_type": "anniversary_bonus", "name": "10,000 Anniversary Miles", "period": "annual", "details": "10,000 bonus miles every year starting on the first anniversary."},
+        {"source_key": "airport-lounge-access", "perk_type": "lounge", "name": "Capital One Lounge and Priority Pass Access", "partner": "Capital One and Priority Pass"}
+      ]
+    },
+    {
+      "cardapi_slug": "american-express-gold-card",
+      "source_url": "https://www.americanexpress.com/us/credit-cards/card/gold-card/",
+      "verified_at": "2026-09-02",
+      "source_updated_at": "2026-04-30",
+      "fields": {"annual_fee": 325, "foreign_transaction_fee": 0, "reward_currency": "MR", "reward_currency_name": "Membership Rewards", "is_discontinued": false},
+      "reward_rates": [
+        {"source_key": "official-prepaid-hotels", "category_slug": "hotels", "rate_multiplier": 5, "rate_type": "points_per_dollar", "notes": "Prepaid hotels through Amex Travel."},
+        {"source_key": "official-dining", "category_slug": "dining", "rate_multiplier": 4, "rate_type": "points_per_dollar", "cap_amount": 50000, "cap_period": "annual", "fallback_rate": 1, "geographic_scope": "worldwide"},
+        {"source_key": "official-us-supermarkets", "category_slug": "groceries", "rate_multiplier": 4, "rate_type": "points_per_dollar", "cap_amount": 25000, "cap_period": "annual", "fallback_rate": 1, "geographic_scope": "US", "merchant_scope": "Supermarkets; issuer exclusions apply.", "notes": "U.S. supermarkets."},
+        {"source_key": "official-flights", "category_slug": "flights", "rate_multiplier": 3, "rate_type": "points_per_dollar", "notes": "Flights booked directly with airlines or through Amex Travel."},
+        {"source_key": "official-base", "category_slug": "other", "rate_multiplier": 1, "rate_type": "points_per_dollar", "is_base_rate": true}
+      ],
+      "signup_bonuses": [{"source_key": "public-offer-2026-09-02", "offer_text": "Apply and find out your welcome offer; the public page does not promise a single fixed amount."}],
+      "statement_credits": [
+        {"source_key": "dining-credit", "name": "Dining Credit", "amount": 120, "period": "annual", "enrollment_required": true, "notes": "Up to $10 monthly at eligible partners."},
+        {"source_key": "uber-cash", "name": "Uber Cash", "amount": 120, "period": "annual", "eligible_merchants": "Uber and Uber Eats in the U.S.", "notes": "$10 monthly; an Amex card must be selected for the transaction."},
+        {"source_key": "resy-credit", "name": "Resy Credit", "amount": 100, "period": "annual", "eligible_merchants": "Eligible U.S. Resy restaurants", "enrollment_required": true},
+        {"source_key": "dunkin-credit", "name": "Dunkin Credit", "amount": 84, "period": "annual", "eligible_merchants": "U.S. Dunkin locations", "enrollment_required": true, "notes": "Up to $7 monthly."}
+      ]
+    },
+    {
+      "cardapi_slug": "american-express-platinum-card",
+      "source_url": "https://www.americanexpress.com/us/credit-cards/card/platinum/",
+      "verified_at": "2026-09-02",
+      "fields": {"annual_fee": 895, "foreign_transaction_fee": 0, "reward_currency": "MR", "reward_currency_name": "Membership Rewards", "is_discontinued": false},
+      "reward_rates": [
+        {"source_key": "official-flights", "category_slug": "flights", "rate_multiplier": 5, "rate_type": "points_per_dollar", "cap_amount": 500000, "cap_period": "annual", "fallback_rate": 1, "notes": "Flights booked directly with airlines or through Amex Travel."},
+        {"source_key": "official-prepaid-hotels", "category_slug": "hotels", "rate_multiplier": 5, "rate_type": "points_per_dollar", "notes": "Prepaid hotels through Amex Travel."},
+        {"source_key": "official-base", "category_slug": "other", "rate_multiplier": 1, "rate_type": "points_per_dollar", "is_base_rate": true}
+      ],
+      "signup_bonuses": [{"source_key": "public-offer-2026-09-02", "offer_text": "Public offer shown as high as 175,000 Membership Rewards points after spending $12,000 in the first 6 months; actual offer is disclosed during application.", "bonus_amount": 175000, "bonus_unit": "points", "minimum_spend": 12000, "minimum_spend_months": 6}],
+      "statement_credits": [
+        {"source_key": "hotel-credit", "name": "Hotel Credit", "amount": 600, "period": "annual", "eligible_merchants": "Eligible prepaid Fine Hotels + Resorts or The Hotel Collection bookings through Amex Travel", "notes": "Up to $300 semiannually."},
+        {"source_key": "resy-credit", "name": "Resy Credit", "amount": 400, "period": "annual", "eligible_merchants": "Eligible U.S. Resy restaurants", "enrollment_required": true, "notes": "Up to $100 quarterly."},
+        {"source_key": "digital-entertainment-credit", "name": "Digital Entertainment Credit", "amount": 300, "period": "annual", "eligible_merchants": "Participating digital entertainment partners", "enrollment_required": true, "notes": "Up to $25 monthly."},
+        {"source_key": "airline-fee-credit", "name": "Airline Fee Credit", "amount": 200, "period": "annual", "eligible_merchants": "Incidental fees with one selected qualifying airline", "enrollment_required": true},
+        {"source_key": "clear-credit", "name": "CLEAR+ Credit", "amount": 219, "period": "annual", "eligible_merchants": "CLEAR+ membership", "enrollment_required": true},
+        {"source_key": "uber-cash", "name": "Uber Cash", "amount": 200, "period": "annual", "eligible_merchants": "Uber and Uber Eats in the U.S.", "notes": "$15 monthly plus $20 in December."}
+      ],
+      "perks": [{"source_key": "global-lounge-collection", "perk_type": "lounge", "name": "Global Lounge Collection", "partner": "American Express", "details": "Access to participating Centurion, Priority Pass, Delta Sky Club, and other select lounges; enrollment and access limitations apply."}]
+    },
+    {
+      "cardapi_slug": "chase-sapphire-preferred-credit-card",
+      "source_url": "https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred",
+      "verified_at": "2026-09-02",
+      "fields": {"annual_fee": 95, "foreign_transaction_fee": 0, "is_discontinued": false},
+      "reward_rates": [
+        {"source_key": "official-chase-travel", "category_slug": "travel", "rate_multiplier": 5, "rate_type": "points_per_dollar", "booking_channel": "issuer_portal", "booking_portal": "Chase Travel", "notes": "Purchases through Chase Travel."},
+        {"source_key": "official-dining", "category_slug": "dining", "rate_multiplier": 3, "rate_type": "points_per_dollar"},
+        {"source_key": "official-gas-ev", "category_slug": "gas", "rate_multiplier": 3, "rate_type": "points_per_dollar", "notes": "Gas stations, EV charging, and vacation homes at eligible brands."},
+        {"source_key": "official-streaming", "category_slug": "streaming", "rate_multiplier": 3, "rate_type": "points_per_dollar", "notes": "Eligible streaming services."},
+        {"source_key": "official-online-grocery", "category_slug": "groceries", "rate_multiplier": 3, "rate_type": "points_per_dollar", "transaction_method": "online", "merchant_scope": "Eligible online grocery purchases; exclusions apply.", "notes": "Online grocery; exclusions apply."},
+        {"source_key": "official-other-travel", "category_slug": "travel", "rate_multiplier": 2, "rate_type": "points_per_dollar"},
+        {"source_key": "official-base", "category_slug": "other", "rate_multiplier": 1, "rate_type": "points_per_dollar", "is_base_rate": true}
+      ],
+      "signup_bonuses": [{"source_key": "public-offer-2026-09-02", "offer_text": "Earn 75,000 points after spending $5,000 in purchases in the first 3 months from account opening.", "bonus_amount": 75000, "bonus_unit": "points", "minimum_spend": 5000, "minimum_spend_months": 3}],
+      "statement_credits": [
+        {"source_key": "chase-travel-hotel-credit", "name": "Chase Travel Hotel Credit", "amount": 100, "period": "annual", "eligible_merchants": "Hotel stays purchased through Chase Travel"},
+        {"source_key": "trusted-traveler-credit", "name": "Global Entry, TSA PreCheck, or NEXUS Credit", "amount": 120, "eligible_merchants": "Eligible application fee", "notes": "One credit every four years."}
+      ],
+      "perks": [{"source_key": "points-transfer", "perk_type": "transfer", "name": "Airline and Hotel Point Transfers", "details": "Transfer Ultimate Rewards points to participating airline and hotel programs."}]
+    },
+    {
+      "cardapi_slug": "chase-freedom-unlimited-credit-card",
+      "source_url": "https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited",
+      "verified_at": "2026-09-02",
+      "fields": {"annual_fee": 0, "is_discontinued": false},
+      "reward_rates": [
+        {"source_key": "official-chase-travel", "category_slug": "travel", "rate_multiplier": 5, "rate_type": "points_per_dollar", "booking_channel": "issuer_portal", "booking_portal": "Chase Travel", "notes": "Marketed as 5% cash back; earned as Ultimate Rewards points."},
+        {"source_key": "official-dining", "category_slug": "dining", "rate_multiplier": 3, "rate_type": "points_per_dollar", "notes": "Marketed as 3% cash back; earned as Ultimate Rewards points."},
+        {"source_key": "official-drugstores", "category_slug": "drugstores", "rate_multiplier": 3, "rate_type": "points_per_dollar", "notes": "Marketed as 3% cash back; earned as Ultimate Rewards points."},
+        {"source_key": "official-base", "category_slug": "other", "rate_multiplier": 1.5, "rate_type": "points_per_dollar", "is_base_rate": true, "notes": "Marketed as 1.5% cash back; earned as Ultimate Rewards points."}
+      ],
+      "signup_bonuses": [{"source_key": "public-offer-2026-09-02", "offer_text": "Earn a $200 bonus after spending $500 on purchases in the first 3 months from account opening.", "bonus_amount": 200, "bonus_unit": "cash", "minimum_spend": 500, "minimum_spend_months": 3}],
+      "perks": [{"source_key": "dashpass", "perk_type": "membership", "name": "Complimentary DashPass", "partner": "DoorDash", "period": "12 months", "details": "Activation required by December 31, 2027."}]
+    },
+    {
+      "cardapi_slug": "savor-rewards-from-capital-one",
+      "source_url": "https://www.capitalone.com/credit-cards/cash-back/savor/",
+      "verified_at": "2026-09-02",
+      "fields": {"annual_fee": 0, "foreign_transaction_fee": 0, "reward_currency": "cashback", "reward_currency_name": "Cash Back", "product_family": "savor", "recommended_credit_profile": "excellent", "is_discontinued": false},
+      "reward_rates": [
+        {"source_key": "official-dining", "category_slug": "dining", "rate_multiplier": 3, "rate_type": "percent_cashback"},
+        {"source_key": "official-groceries", "category_slug": "groceries", "rate_multiplier": 3, "rate_type": "percent_cashback", "notes": "Excludes superstores such as Walmart and Target."},
+        {"source_key": "official-entertainment", "category_slug": "entertainment", "rate_multiplier": 3, "rate_type": "percent_cashback"},
+        {"source_key": "official-base", "category_slug": "other", "rate_multiplier": 1, "rate_type": "percent_cashback", "is_base_rate": true}
+      ],
+      "signup_bonuses": [{"source_key": "public-offer-2026-09-02", "offer_text": "Excellent Credit public offer: earn a $200 cash bonus after spending $500 on purchases within the first 3 months from account opening.", "bonus_amount": 200, "bonus_unit": "cash", "minimum_spend": 500, "minimum_spend_months": 3}]
+    },
+    {
+      "local_slug": "capital-one-savor-rewards-good-credit",
+      "name": "Capital One Savor Rewards for Good Credit",
+      "issuer_slug": "capital-one",
+      "source_url": "https://www.capitalone.com/credit-cards/cash-back/savor/",
+      "verified_at": "2026-09-02",
+      "fields": {"network": "VISA", "card_type": "personal", "annual_fee": 0, "foreign_transaction_fee": 0, "reward_currency": "cashback", "reward_currency_name": "Cash Back", "product_family": "savor", "recommended_credit_profile": "good", "is_discontinued": false},
+      "reward_rates": [
+        {"source_key": "official-dining", "category_slug": "dining", "rate_multiplier": 3, "rate_type": "percent_cashback"},
+        {"source_key": "official-groceries", "category_slug": "groceries", "rate_multiplier": 3, "rate_type": "percent_cashback", "notes": "Excludes superstores such as Walmart and Target."},
+        {"source_key": "official-entertainment", "category_slug": "entertainment", "rate_multiplier": 3, "rate_type": "percent_cashback"},
+        {"source_key": "official-base", "category_slug": "other", "rate_multiplier": 1, "rate_type": "percent_cashback", "is_base_rate": true}
+      ],
+      "signup_bonuses": []
+    },
+    {
+      "cardapi_slug": "capital-one-savor-one-credit-card",
+      "source_url": "https://www.capitalone.com/credit-cards/cash-back/savor/",
+      "verified_at": "2026-09-02",
+      "fields": {"annual_fee": 39, "foreign_transaction_fee": 0, "reward_currency": "cashback", "reward_currency_name": "Cash Back", "product_family": "savor", "recommended_credit_profile": "fair", "is_discontinued": false},
+      "reward_rates": [
+        {"source_key": "official-dining", "category_slug": "dining", "rate_multiplier": 3, "rate_type": "percent_cashback"},
+        {"source_key": "official-groceries", "category_slug": "groceries", "rate_multiplier": 3, "rate_type": "percent_cashback", "notes": "Excludes superstores such as Walmart and Target."},
+        {"source_key": "official-entertainment", "category_slug": "entertainment", "rate_multiplier": 3, "rate_type": "percent_cashback"},
+        {"source_key": "official-base", "category_slug": "other", "rate_multiplier": 1, "rate_type": "percent_cashback", "is_base_rate": true}
+      ],
+      "signup_bonuses": []
+    },
+    {
+      "cardapi_slug": "capital-one-savor-rewards-for-students",
+      "source_url": "https://www.capitalone.com/credit-cards/savor-student/",
+      "verified_at": "2026-09-02",
+      "fields": {"annual_fee": 0, "foreign_transaction_fee": 0, "reward_currency": "cashback", "reward_currency_name": "Cash Back", "product_family": "savor", "recommended_credit_profile": "student", "is_discontinued": false},
+      "reward_rates": [
+        {"source_key": "official-dining", "category_slug": "dining", "rate_multiplier": 3, "rate_type": "percent_cashback"},
+        {"source_key": "official-groceries", "category_slug": "groceries", "rate_multiplier": 3, "rate_type": "percent_cashback", "notes": "Excludes superstores such as Walmart and Target."},
+        {"source_key": "official-entertainment", "category_slug": "entertainment", "rate_multiplier": 3, "rate_type": "percent_cashback"},
+        {"source_key": "official-streaming", "category_slug": "streaming", "rate_multiplier": 3, "rate_type": "percent_cashback", "notes": "Eligible popular streaming services."},
+        {"source_key": "official-base", "category_slug": "other", "rate_multiplier": 1, "rate_type": "percent_cashback", "is_base_rate": true}
+      ],
+      "signup_bonuses": [{"source_key": "public-offer-2026-09-02", "offer_text": "Limited-time public offer: earn a $100 cash bonus after spending $300 on purchases within the first 3 months from account opening.", "bonus_amount": 100, "bonus_unit": "cash", "minimum_spend": 300, "minimum_spend_months": 3}]
+    },
+    {
+      "cardapi_slug": "citi-strata-premier-card",
+      "source_url": "https://www.citi.com/credit-cards/citi-strata-premier-credit-card",
+      "verified_at": "2026-09-02",
+      "fields": {"annual_fee": 95, "foreign_transaction_fee": 0, "is_discontinued": false},
+      "reward_rates": [
+        {"source_key": "official-citi-hotels", "category_slug": "hotels", "rate_multiplier": 10, "rate_type": "points_per_dollar", "booking_channel": "issuer_portal", "booking_portal": "Citi Travel"},
+        {"source_key": "official-citi-car-rentals", "category_slug": "car_rentals", "rate_multiplier": 10, "rate_type": "points_per_dollar", "booking_channel": "issuer_portal", "booking_portal": "Citi Travel"},
+        {"source_key": "official-citi-attractions", "category_slug": "attractions", "rate_multiplier": 10, "rate_type": "points_per_dollar", "booking_channel": "issuer_portal", "booking_portal": "Citi Travel"},
+        {"source_key": "official-air-travel", "category_slug": "flights", "rate_multiplier": 3, "rate_type": "points_per_dollar", "notes": "Air travel purchases."},
+        {"source_key": "official-other-hotels", "category_slug": "hotels", "rate_multiplier": 3, "rate_type": "points_per_dollar", "notes": "Other hotel purchases outside the 10X Citi Travel rate."},
+        {"source_key": "official-dining", "category_slug": "dining", "rate_multiplier": 3, "rate_type": "points_per_dollar"},
+        {"source_key": "official-supermarkets", "category_slug": "groceries", "rate_multiplier": 3, "rate_type": "points_per_dollar"},
+        {"source_key": "official-gas-ev", "category_slug": "gas", "rate_multiplier": 3, "rate_type": "points_per_dollar", "notes": "Gas and EV charging stations."},
+        {"source_key": "official-base", "category_slug": "other", "rate_multiplier": 1, "rate_type": "points_per_dollar", "is_base_rate": true}
+      ],
+      "signup_bonuses": [{"source_key": "public-offer-2026-09-02", "offer_text": "Earn 60,000 bonus points after spending $4,000 in the first 3 months.", "bonus_amount": 60000, "bonus_unit": "points", "minimum_spend": 4000, "minimum_spend_months": 3}],
+      "statement_credits": [{"source_key": "annual-hotel-benefit", "name": "Annual Hotel Benefit", "amount": 100, "period": "annual", "eligible_merchants": "A single hotel stay of $500 or more booked through Citi Travel", "notes": "Excludes taxes and fees."}],
+      "perks": [{"source_key": "points-transfer", "perk_type": "transfer", "name": "ThankYou Point Transfers", "details": "Transfer points to participating airline and hotel loyalty programs."}]
+    },
+    {
+      "cardapi_slug": "wells-fargo-autograph-card",
+      "source_url": "https://creditcards.wellsfargo.com/autograph-visa-credit-card/",
+      "verified_at": "2026-09-02",
+      "fields": {"annual_fee": 0, "foreign_transaction_fee": 0, "is_discontinued": false},
+      "reward_rates": [
+        {"source_key": "official-restaurants", "category_slug": "dining", "rate_multiplier": 3, "rate_type": "points_per_dollar"},
+        {"source_key": "official-travel", "category_slug": "travel", "rate_multiplier": 3, "rate_type": "points_per_dollar"},
+        {"source_key": "official-gas", "category_slug": "gas", "rate_multiplier": 3, "rate_type": "points_per_dollar", "notes": "Gas stations and EV charging."},
+        {"source_key": "official-transit", "category_slug": "transit", "rate_multiplier": 3, "rate_type": "points_per_dollar"},
+        {"source_key": "official-streaming", "category_slug": "streaming", "rate_multiplier": 3, "rate_type": "points_per_dollar"},
+        {"source_key": "official-phone", "category_slug": "phone_plans", "rate_multiplier": 3, "rate_type": "points_per_dollar"},
+        {"source_key": "official-base", "category_slug": "other", "rate_multiplier": 1, "rate_type": "points_per_dollar", "is_base_rate": true}
+      ],
+      "signup_bonuses": [{"source_key": "public-offer-2026-09-02", "offer_text": "Earn 20,000 bonus points after spending $1,000 in purchases in the first 3 months.", "bonus_amount": 20000, "bonus_unit": "points", "minimum_spend": 1000, "minimum_spend_months": 3}],
+      "perks": [{"source_key": "cell-phone-protection", "perk_type": "protection", "name": "Cellular Telephone Protection", "value": 600, "details": "Up to $600 against covered damage or theft, subject to a $25 deductible and other terms."}]
+    },
+    {
+      "cardapi_slug": "citi-double-cash-credit-card",
+      "source_url": "https://www.citi.com/credit-cards/personal/double-cash",
+      "verified_at": "2026-09-02",
+      "fields": {"annual_fee": 0, "is_discontinued": false},
+      "reward_rates": [{"source_key": "official-base", "category_slug": "other", "rate_multiplier": 2, "rate_type": "points_per_dollar", "is_base_rate": true, "notes": "Earned as ThankYou Points: 1 point per dollar when buying and another 1 point per dollar when paying; redeemable as 2% cash back at one cent per point."}],
+      "signup_bonuses": [{"source_key": "public-offer-2026-09-02", "offer_text": "Earn $200 cash back after spending $1,500 on purchases in the first 6 months.", "bonus_amount": 200, "bonus_unit": "cash", "minimum_spend": 1500, "minimum_spend_months": 6}]
+    }
+  ]
+}

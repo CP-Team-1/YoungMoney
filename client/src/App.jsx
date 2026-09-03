@@ -17,6 +17,8 @@ import QuizResult from './pages/QuizResult'
 import Cards from './pages/Cards'
 // DEMO ONLY — remove this import before production deployment
 import Demo from './pages/Demo'
+import Goals from './pages/Goals'
+import LearningArticleRouter from './features/learningHub/LearningArticleRouter'
 
 function PrivateRoute({ children }) {
   const { isAuthenticated, loading } = useAuth()
@@ -43,11 +45,13 @@ export default function App() {
       <Route path="/budget" element={<PrivateRoute><Budget /></PrivateRoute>} />
       <Route path="/spend" element={<PrivateRoute><SpendLog /></PrivateRoute>} />
       <Route path="/learn" element={<PrivateRoute><LearningHub /></PrivateRoute>} />
+      <Route path="/learn/articles/:articleId" element={<PrivateRoute><LearningArticleRouter /></PrivateRoute>} />
       <Route path="/learn/:lessonId" element={<PrivateRoute><Lesson /></PrivateRoute>} />
       <Route path="/learn/:lessonId/quiz" element={<PrivateRoute><Quiz /></PrivateRoute>} />
       <Route path="/learn/:lessonId/result" element={<PrivateRoute><QuizResult /></PrivateRoute>} />
       <Route path="/cards" element={<PrivateRoute><Cards /></PrivateRoute>} />
       {import.meta.env.DEV && <Route path="/demo" element={<Demo />} />}
+      <Route path="/goals" element={<PrivateRoute><Goals /></PrivateRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
