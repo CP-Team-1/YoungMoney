@@ -1,0 +1,78 @@
+{
+  "programs": [
+    {
+      "code": "chase-cash-back",
+      "name": "Chase Cash Back",
+      "issuer_slug": "chase",
+      "unit": "cash",
+      "program_type": "cash",
+      "cash_value_cpp": 1,
+      "source_url": "https://creditcards.chase.com/cash-back-credit-cards/amazon-rewards",
+      "verified_at": "2026-09-03"
+    },
+    {
+      "code": "amex-cash-back",
+      "name": "American Express Cash Back",
+      "issuer_slug": "amex-us",
+      "unit": "cash",
+      "program_type": "cash",
+      "cash_value_cpp": 1,
+      "source_url": "https://www.americanexpress.com/en-us/business/credit-cards/blue-business-cash/",
+      "verified_at": "2026-09-03"
+    }
+  ],
+  "memberships": [
+    {
+      "card_slug": "amazon-prime-visa",
+      "program_code": "chase-cash-back",
+      "can_cash_redeem": true,
+      "source_url": "https://creditcards.chase.com/cash-back-credit-cards/amazon-prime-rewards",
+      "verified_at": "2026-09-03"
+    },
+    {
+      "card_slug": "amazon-visa",
+      "program_code": "chase-cash-back",
+      "can_cash_redeem": true,
+      "source_url": "https://creditcards.chase.com/cash-back-credit-cards/amazon-rewards",
+      "verified_at": "2026-09-03"
+    },
+    {
+      "card_slug": "american-express-blue-business-cash-card",
+      "program_code": "amex-cash-back",
+      "can_cash_redeem": true,
+      "source_url": "https://www.americanexpress.com/en-us/business/credit-cards/blue-business-cash/",
+      "verified_at": "2026-09-03"
+    },
+    {
+      "card_slug": "american-express-blue-business-plus-card",
+      "program_code": "amex-membership-rewards",
+      "source_url": "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/bluebusinessplus-credit-card/42732-9-0",
+      "verified_at": "2026-09-03"
+    },
+    {
+      "card_slug": "american-express-business-gold-card",
+      "program_code": "amex-membership-rewards",
+      "source_url": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-gold-card-amex/",
+      "verified_at": "2026-09-03"
+    },
+    {
+      "card_slug": "american-express-business-green-card",
+      "program_code": "amex-membership-rewards",
+      "source_url": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-green-card-amex/",
+      "verified_at": "2026-09-03"
+    },
+    {
+      "card_slug": "american-express-marriott-bonvoy-business-card",
+      "program_code": "marriott-bonvoy",
+      "source_url": "https://www.americanexpress.com/us/credit-cards/card-application/apply/prospect/terms/marriott-bonvoy-business-american-express-card/42732-9-0",
+      "verified_at": "2026-09-03"
+    },
+    {
+      "card_slug": "aer-lingus-visa-signature-credit-card",
+      "program_code": "aer-lingus-aerclub",
+      "source_url": "https://creditcards.chase.com/travel-credit-cards/avios/aer-lingus",
+      "verified_at": "2026-09-03"
+    }
+  ],
+  "unlocks": []
+}
