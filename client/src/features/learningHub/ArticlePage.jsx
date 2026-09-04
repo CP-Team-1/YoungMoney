@@ -1,8 +1,13 @@
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import AppShell from '../../components/AppShell.jsx'
+import { useLearning } from '../../context/LearningContext.jsx'
 import './learningHub.css'
 
 function ArticlePage({ title, topic, level, children, takeaway, sources }) {
+  const { articleId } = useParams()
+  const { completedArticleIds, markArticleRead, markArticleUnread } = useLearning()
+  const isRead = articleId ? completedArticleIds.has(articleId) : false
+
   return (
     <AppShell>
       <div className="learning-article">
@@ -15,6 +20,7 @@ function ArticlePage({ title, topic, level, children, takeaway, sources }) {
             <div className="learning-article__meta">
               <span className="learning-article__topic">{topic}</span>
               <span className="learning-article__level">{level}</span>
+              {isRead && <span className="learning-article__read-badge">✓ Read</span>}
             </div>
             <h1>{title}</h1>
           </header>
@@ -42,6 +48,30 @@ function ArticlePage({ title, topic, level, children, takeaway, sources }) {
               investment, tax, or legal advice.
             </p>
           </footer>
+
+          {/* Article read completion control — requires deliberate user action */}
+          <div className="learning-article__complete">
+            {isRead ? (
+              <div className="article-complete-row">
+                <span className="article-complete-check">✓ Marked as read</span>
+                <button
+                  type="button"
+                  className="article-mark-btn article-mark-btn--undo"
+                  onClick={() => markArticleUnread(articleId)}
+                >
+                  Undo
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="article-mark-btn article-mark-btn--read"
+                onClick={() => markArticleRead(articleId)}
+              >
+                Mark Article Read
+              </button>
+            )}
+          </div>
         </article>
       </div>
     </AppShell>

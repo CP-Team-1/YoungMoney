@@ -133,6 +133,63 @@
   line-height: 1.6;
 }
 
+/* ─── Article read badge (header) ────────────────────────── */
+.learning-article__read-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-sage);
+  background: var(--color-sage-dim);
+  border: 1px solid var(--color-sage-border);
+  border-radius: var(--radius-full);
+  padding: 2px 10px;
+}
+
+/* ─── Mark Article Read control (footer) ─────────────────── */
+.learning-article__complete {
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--space-2);
+}
+
+.article-complete-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.article-complete-check {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-sage);
+}
+
+.article-mark-btn {
+  padding: 11px 22px;
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: opacity 0.15s;
+  border: 1px solid transparent;
+}
+
+.article-mark-btn--read {
+  background: var(--color-sage-dim);
+  border-color: var(--color-sage-border);
+  color: var(--color-sage);
+}
+.article-mark-btn--read:hover { opacity: 0.8; }
+
+.article-mark-btn--undo {
+  background: none;
+  border-color: var(--color-border-strong);
+  color: var(--color-muted);
+  font-size: 12px;
+  padding: 6px 14px;
+}
+.article-mark-btn--undo:hover { color: var(--color-text); }
+
 @media (max-width: 767px) {
   .learning-article__header h1 { font-size: 28px; }
   .learning-article__body { font-size: 16px; }

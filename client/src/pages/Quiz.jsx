@@ -5,11 +5,13 @@ import QuizQuestion from '../components/QuizQuestion'
 import QuizAnswer from '../components/QuizAnswer'
 import LoadingState from '../components/LoadingState'
 import { getLesson } from '../services/learning'
+import { useLearning } from '../context/LearningContext'
 import './Quiz.css'
 
 export default function Quiz() {
   const { lessonId } = useParams()
   const navigate = useNavigate()
+  const { recordQuizAttempt } = useLearning()
   const [lesson, setLesson] = useState(null)
   const [loading, setLoading] = useState(true)
   const [current, setCurrent] = useState(0)
@@ -49,6 +51,9 @@ export default function Quiz() {
         (a) => a.selected === lesson.quiz.find((qq) => qq.id === a.questionId).correct
       ).length
       const score = Math.round((correctCount / lesson.quiz.length) * 100)
+      // Record every quiz attempt regardless of score — does NOT touch Lessons or Articles counts
+      // Retaking the same quiz updates best/latest score but does NOT increment unique-quiz count
+      recordQuizAttempt(lessonId, score)
       navigate(`/learn/${lessonId}/result`, { state: { score, total: lesson.quiz.length, correct: correctCount } })
     } else {
       setCurrent(current + 1)

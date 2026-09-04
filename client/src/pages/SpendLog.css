@@ -33,3 +33,117 @@
   border-radius: var(--radius-xl);
   padding: var(--space-2) var(--space-5);
 }
+
+.spend-log__controls {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.sl-btn {
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  border: 1px solid transparent;
+  transition: opacity 0.15s;
+}
+.sl-btn:hover { opacity: 0.85; }
+
+.sl-btn--primary {
+  background: var(--color-orange-dim);
+  border-color: var(--color-orange-border);
+  color: var(--color-orange);
+}
+.sl-btn--ghost {
+  background: var(--color-surface);
+  border-color: var(--color-border-strong);
+  color: var(--color-muted);
+}
+.sl-btn--danger {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-muted);
+}
+.sl-btn--danger:hover { border-color: #e06060; color: #e06060; opacity: 1; }
+
+.sl-btn--icon {
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.sl-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: var(--space-5);
+}
+
+.sl-modal {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-lg);
+}
+
+.sl-modal__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-6);
+}
+
+.sl-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.sl-modal__actions {
+  display: flex;
+  gap: var(--space-3);
+  padding-top: var(--space-2);
+}
+
+.sl-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sl-field__label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sl-field__input {
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: var(--font-sans);
+  outline: none;
+  width: 100%;
+}
+.sl-field__input:focus { border-color: var(--color-orange-border); }
+
+.sl-field__error {
+  font-size: 12px;
+  color: #e06060;
+}

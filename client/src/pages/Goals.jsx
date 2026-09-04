@@ -1,35 +1,117 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import AppShell from '../components/AppShell'
-import ErrorMessage from '../components/ErrorMessage'
-import LoadingState from '../components/LoadingState'
-import { createGoal, deleteGoal, getGoals, getGoalTypes } from '../services/goals'
+import { useGoals } from '../context/GoalsContext'
+import { CUSTOM_GOAL_TYPE_ID } from '../context/GoalsContext'
+import { formatMoney } from '../utils/money'
 import './Goals.css'
 
-const EMPTY_FORM = { goal: '', name: '', target: '', notes: '' }
+const EMPTY_FORM = { goal: '', name: '', target: '', notes: '', customGoalType: '' }
 
-function firstError(value) {
-  return Array.isArray(value) ? value[0] : value
+// ─── Edit goal modal ──────────────────────────────────────────────────────────
+function EditGoalModal({ goal, onSave, onClose }) {
+  const [name, setName] = useState(goal.name)
+  const [target, setTarget] = useState(String(goal.target))
+  const [notes, setNotes] = useState(goal.notes ?? '')
+  const [goalName, setGoalName] = useState(goal.goal_name ?? '')
+  const [errors, setErrors] = useState({})
+
+  const isCustom = goal.goal === CUSTOM_GOAL_TYPE_ID
+
+  function validate() {
+    const e = {}
+    if (!name.trim()) e.name = 'Goal name is required'
+    if (isCustom && !goalName.trim()) e.goalName = 'Custom goal type is required'
+    const t = parseFloat(target)
+    if (!target || isNaN(t) || t <= 0) e.target = 'Enter a positive target amount'
+    return e
+  }
+
+  function handleSubmit(ev) {
+    ev.preventDefault()
+    const errs = validate()
+    if (Object.keys(errs).length) { setErrors(errs); return }
+    onSave({
+      name: name.trim(),
+      target: parseFloat(target),
+      notes: notes.trim(),
+      ...(isCustom ? { goal_name: goalName.trim() } : {}),
+    })
+  }
+
+  return (
+    <div className="sl-modal-overlay" onClick={onClose}>
+      <div className="sl-modal" onClick={(e) => e.stopPropagation()}>
+        <h2 className="sl-modal__title">Edit Goal</h2>
+        <form onSubmit={handleSubmit} className="sl-modal__form" noValidate>
+          {isCustom && (
+            <div className="sl-field">
+              <label className="sl-field__label" htmlFor="edit-goal-name">Goal type</label>
+              <input
+                className="sl-field__input"
+                id="edit-goal-name"
+                value={goalName}
+                onChange={(e) => { setGoalName(e.target.value); setErrors((p) => ({ ...p, goalName: undefined })) }}
+                maxLength="80"
+                placeholder="e.g. Wedding, Business, Travel"
+              />
+              {errors.goalName && <p className="sl-field__error">{errors.goalName}</p>}
+            </div>
+          )}
+          <div className="sl-field">
+            <label className="sl-field__label" htmlFor="edit-name">Goal name</label>
+            <input
+              className="sl-field__input"
+              id="edit-name"
+              value={name}
+              onChange={(e) => { setName(e.target.value); setErrors((p) => ({ ...p, name: undefined })) }}
+              maxLength="150"
+              autoFocus={!isCustom}
+            />
+            {errors.name && <p className="sl-field__error">{errors.name}</p>}
+          </div>
+          <div className="sl-field">
+            <label className="sl-field__label" htmlFor="edit-target">Target amount ($)</label>
+            <input
+              className="sl-field__input"
+              id="edit-target"
+              type="number"
+              min="0.01"
+              step="0.01"
+              value={target}
+              onChange={(e) => { setTarget(e.target.value); setErrors((p) => ({ ...p, target: undefined })) }}
+              placeholder="0.00"
+            />
+            {errors.target && <p className="sl-field__error">{errors.target}</p>}
+          </div>
+          <div className="sl-field">
+            <label className="sl-field__label" htmlFor="edit-notes">Notes</label>
+            <textarea
+              className="sl-field__input"
+              id="edit-notes"
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              rows="3"
+              placeholder="Add a timeline, motivation, or other details"
+            />
+          </div>
+          <div className="sl-modal__actions">
+            <button type="submit" className="sl-btn sl-btn--primary">Save changes</button>
+            <button type="button" className="sl-btn sl-btn--ghost" onClick={onClose}>Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
 }
 
 export default function Goals() {
-  const [goalTypes, setGoalTypes] = useState([])
-  const [goals, setGoals] = useState([])
+  const { goals, goalTypes, addGoal, deleteGoal, updateGoal } = useGoals()
   const [form, setForm] = useState(EMPTY_FORM)
   const [errors, setErrors] = useState({})
-  const [pageError, setPageError] = useState('')
-  const [loading, setLoading] = useState(true)
-  const [saving, setSaving] = useState(false)
   const [deletingId, setDeletingId] = useState(null)
+  const [editingGoal, setEditingGoal] = useState(null)
 
-  useEffect(() => {
-    Promise.all([getGoalTypes(), getGoals()])
-      .then(([types, savedGoals]) => {
-        setGoalTypes(types)
-        setGoals(savedGoals)
-      })
-      .catch(() => setPageError('Could not load your goals. Please try again.'))
-      .finally(() => setLoading(false))
-  }, [])
+  const isCustomType = form.goal === CUSTOM_GOAL_TYPE_ID
 
   function handleChange(event) {
     const { id, value } = event.target
@@ -37,46 +119,38 @@ export default function Goals() {
     setErrors((current) => ({ ...current, [id]: undefined }))
   }
 
-  async function handleSubmit(event) {
+  function validate() {
+    const e = {}
+    if (!form.goal) e.goal = 'Choose a goal type'
+    if (isCustomType && !form.customGoalType.trim()) e.customGoalType = 'Enter a custom goal type'
+    if (!form.name.trim()) e.name = 'Goal name is required'
+    const t = parseFloat(form.target)
+    if (!form.target || isNaN(t) || t <= 0) e.target = 'Enter a positive target amount'
+    return e
+  }
+
+  function handleSubmit(event) {
     event.preventDefault()
-    setErrors({})
-    setPageError('')
-    setSaving(true)
-
-    try {
-      const savedGoal = await createGoal({
-        ...form,
-        goal: Number(form.goal),
-        notes: form.notes || '',
-      })
-      setGoals((current) => [...current, savedGoal].sort((a, b) => a.name.localeCompare(b.name)))
-      setForm(EMPTY_FORM)
-    } catch (error) {
-      const data = error?.response?.data
-      if (data && typeof data === 'object') {
-        setErrors(Object.fromEntries(Object.entries(data).map(([key, value]) => [key, firstError(value)])))
-      } else {
-        setPageError('Could not save your goal. Please try again.')
-      }
-    } finally {
-      setSaving(false)
-    }
+    const errs = validate()
+    if (Object.keys(errs).length) { setErrors(errs); return }
+    // backend integration point: POST /api/goals/ { goal, name, target, notes }
+    // Custom types use CUSTOM_GOAL_TYPE_ID sentinel — backend will need a free-text goal_type field
+    addGoal({ ...form, target: parseFloat(form.target) })
+    setForm(EMPTY_FORM)
   }
 
-  async function handleDelete(id) {
+  function handleDelete(id) {
     setDeletingId(id)
-    setPageError('')
-    try {
-      await deleteGoal(id)
-      setGoals((current) => current.filter((goal) => goal.id !== id))
-    } catch {
-      setPageError('Could not delete that goal. Please try again.')
-    } finally {
-      setDeletingId(null)
-    }
+    // backend integration point: DELETE /api/goals/:id/
+    deleteGoal(id)
+    setDeletingId(null)
   }
 
-  if (loading) return <AppShell><LoadingState /></AppShell>
+  function handleEditSave(updates) {
+    // backend integration point: PATCH /api/goals/:id/
+    updateGoal(editingGoal.id, updates)
+    setEditingGoal(null)
+  }
 
   return (
     <AppShell>
@@ -87,8 +161,6 @@ export default function Goals() {
           <p>Set a target and keep the details that matter to you in one place.</p>
         </header>
 
-        {pageError && <ErrorMessage message={pageError} />}
-
         <div className="goals-layout">
           <section className="goal-form-card" aria-labelledby="new-goal-title">
             <h2 id="new-goal-title">Add a goal</h2>
@@ -97,31 +169,73 @@ export default function Goals() {
                 <label htmlFor="goal">Goal type <span aria-hidden="true">*</span></label>
                 <select id="goal" value={form.goal} onChange={handleChange} required aria-invalid={!!errors.goal}>
                   <option value="">Choose a goal type</option>
-                  {goalTypes.map((type) => <option key={type.id} value={type.id}>{type.goal}</option>)}
+                  {goalTypes.map((type) => (
+                    <option key={type.id} value={type.id}>{type.goal}</option>
+                  ))}
+                  <option value={CUSTOM_GOAL_TYPE_ID}>Other / Custom</option>
                 </select>
                 {errors.goal && <p role="alert">{errors.goal}</p>}
               </div>
 
+              {isCustomType && (
+                <div className="goal-input">
+                  <label htmlFor="customGoalType">Custom goal type <span aria-hidden="true">*</span></label>
+                  <input
+                    id="customGoalType"
+                    value={form.customGoalType}
+                    onChange={handleChange}
+                    maxLength="80"
+                    placeholder="e.g. Wedding, Business, Travel"
+                    required
+                    aria-invalid={!!errors.customGoalType}
+                    autoFocus
+                  />
+                  {errors.customGoalType && <p role="alert">{errors.customGoalType}</p>}
+                </div>
+              )}
+
               <div className="goal-input">
                 <label htmlFor="name">Goal name <span aria-hidden="true">*</span></label>
-                <input id="name" value={form.name} onChange={handleChange} maxLength="150" placeholder="e.g. Emergency fund" required aria-invalid={!!errors.name} />
+                <input
+                  id="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  maxLength="150"
+                  placeholder="e.g. Emergency fund"
+                  required
+                  aria-invalid={!!errors.name}
+                />
                 {errors.name && <p role="alert">{errors.name}</p>}
               </div>
 
               <div className="goal-input">
                 <label htmlFor="target">Target amount <span aria-hidden="true">*</span></label>
-                <input id="target" type="number" value={form.target} onChange={handleChange} min="0.01" step="0.01" placeholder="5000.00" required aria-invalid={!!errors.target} />
+                <input
+                  id="target"
+                  type="number"
+                  value={form.target}
+                  onChange={handleChange}
+                  min="0.01"
+                  step="0.01"
+                  placeholder="5000.00"
+                  required
+                  aria-invalid={!!errors.target}
+                />
                 {errors.target && <p role="alert">{errors.target}</p>}
               </div>
 
               <div className="goal-input">
                 <label htmlFor="notes">Notes <small>Optional</small></label>
-                <textarea id="notes" value={form.notes} onChange={handleChange} rows="4" placeholder="Add a timeline, motivation, or other details" aria-invalid={!!errors.notes} />
-                {errors.notes && <p role="alert">{errors.notes}</p>}
+                <textarea
+                  id="notes"
+                  value={form.notes}
+                  onChange={handleChange}
+                  rows="4"
+                  placeholder="Add a timeline, motivation, or other details"
+                />
               </div>
 
-              {errors.non_field_errors && <p className="goal-form__error" role="alert">{errors.non_field_errors}</p>}
-              <button type="submit" disabled={saving}>{saving ? 'Saving…' : 'Save goal'}</button>
+              <button type="submit">Save goal</button>
             </form>
           </section>
 
@@ -134,17 +248,40 @@ export default function Goals() {
                 <div>
                   <span className="saved-goal__type">{goal.goal_name}</span>
                   <h3>{goal.name}</h3>
-                  <strong>${Number(goal.target).toLocaleString(undefined, { minimumFractionDigits: 2 })}</strong>
+                  <strong>{formatMoney(goal.target)}</strong>
                   {goal.notes && <p>{goal.notes}</p>}
                 </div>
-                <button type="button" onClick={() => handleDelete(goal.id)} disabled={deletingId === goal.id} aria-label={`Delete ${goal.name}`}>
-                  {deletingId === goal.id ? 'Deleting…' : 'Delete'}
-                </button>
+                <div className="saved-goal__actions">
+                  <button
+                    type="button"
+                    className="saved-goal__edit-btn"
+                    onClick={() => setEditingGoal(goal)}
+                    aria-label={`Edit ${goal.name}`}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(goal.id)}
+                    disabled={deletingId === goal.id}
+                    aria-label={`Delete ${goal.name}`}
+                  >
+                    {deletingId === goal.id ? 'Deleting…' : 'Delete'}
+                  </button>
+                </div>
               </article>
             ))}
           </section>
         </div>
       </div>
+
+      {editingGoal && (
+        <EditGoalModal
+          goal={editingGoal}
+          onSave={handleEditSave}
+          onClose={() => setEditingGoal(null)}
+        />
+      )}
     </AppShell>
   )
 }

@@ -1,26 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import AppShell from '../components/AppShell'
 import LessonCard from '../components/LessonCard'
 import ProgressBar from '../components/ProgressBar'
-import LoadingState from '../components/LoadingState'
 import { learningHubArticles } from '../features/learningHub'
-import { getLessons } from '../services/learning'
+import { useLearning } from '../context/LearningContext'
 import './LearningHub.css'
 
 const ALL = 'All'
 const LEVELS = [ALL, 'Beginner', 'Experienced']
 
 export default function LearningHub() {
-  const [lessons, setLessons] = useState([])
+  const { lessons, completedArticleIds } = useLearning()
   const [topicFilter, setTopicFilter] = useState(ALL)
   const [levelFilter, setLevelFilter] = useState(ALL)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    getLessons().then(setLessons).finally(() => setLoading(false))
-  }, [])
-
-  if (loading) return <AppShell><LoadingState /></AppShell>
 
   const categories = [
     ALL,
@@ -30,15 +22,18 @@ export default function LearningHub() {
     ]),
   ]
 
-  const articles = learningHubArticles.filter((article) => {
-    const matchesTopic = topicFilter === ALL || article.category === topicFilter
-    const matchesLevel = levelFilter === ALL || article.level === levelFilter
-    return matchesTopic && matchesLevel
-  })
+  const articles = learningHubArticles
+    .filter((article) => {
+      const matchesTopic = topicFilter === ALL || article.category === topicFilter
+      const matchesLevel = levelFilter === ALL || article.level === levelFilter
+      return matchesTopic && matchesLevel
+    })
+    .map((article) => ({ ...article, completed: completedArticleIds.has(article.id) }))
 
   const interactiveLessons = topicFilter === ALL
     ? lessons
     : lessons.filter((lesson) => lesson.category === topicFilter)
+
   const completed = lessons.filter((lesson) => lesson.completed).length
 
   return (

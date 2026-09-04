@@ -4,6 +4,7 @@ import AppShell from '../components/AppShell'
 import LessonProgress from '../components/LessonProgress'
 import LoadingState from '../components/LoadingState'
 import { getLesson } from '../services/learning'
+import { useLearning } from '../context/LearningContext'
 import './Lesson.css'
 
 export default function Lesson() {
@@ -12,6 +13,7 @@ export default function Lesson() {
   const [lesson, setLesson] = useState(null)
   const [step, setStep] = useState(0)
   const [loading, setLoading] = useState(true)
+  const { lessons, markLessonComplete, markLessonIncomplete } = useLearning()
 
   useEffect(() => {
     getLesson(lessonId).then(setLesson).finally(() => setLoading(false))
@@ -22,6 +24,8 @@ export default function Lesson() {
 
   const block = lesson.content[step]
   const isLast = step === lesson.content.length - 1
+  const liveLesson = lessons.find((l) => l.id === lessonId)
+  const isCompleted = liveLesson?.completed ?? false
 
   return (
     <AppShell>
@@ -34,6 +38,7 @@ export default function Lesson() {
         <div className="lesson-page__meta">
           <span className="lesson-page__category">{lesson.category}</span>
           <span className="lesson-page__duration">{lesson.duration}</span>
+          {isCompleted && <span className="lesson-page__done-badge">✓ Completed</span>}
         </div>
 
         <h1 className="lesson-page__title">{lesson.title}</h1>
@@ -66,6 +71,31 @@ export default function Lesson() {
             </button>
           )}
         </div>
+
+        {isLast && (
+          <div className="lesson-page__complete">
+            {isCompleted ? (
+              <div className="lesson-complete-row">
+                <span className="lesson-complete-check">✓ Marked as complete</span>
+                <button
+                  type="button"
+                  className="lesson-mark-btn lesson-mark-btn--undo"
+                  onClick={() => markLessonIncomplete(lessonId)}
+                >
+                  Undo
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="lesson-mark-btn lesson-mark-btn--complete"
+                onClick={() => markLessonComplete(lessonId)}
+              >
+                Mark lesson complete
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </AppShell>
   )

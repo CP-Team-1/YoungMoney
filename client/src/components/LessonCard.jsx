@@ -8,7 +8,7 @@ export default function LessonCard({ lesson }) {
       <div className="lesson-card__top">
         <span className="lesson-card__category">{category}</span>
         {level && <span className="lesson-card__level">{level}</span>}
-        {!level && completed && <span className="lesson-card__badge">✓ Done</span>}
+        {completed && <span className="lesson-card__badge">{level ? '✓ Read' : '✓ Done'}</span>}
       </div>
       <h3 className="lesson-card__title">{title}</h3>
       <p className="lesson-card__desc">{description}</p>

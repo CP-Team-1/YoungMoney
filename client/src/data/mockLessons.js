@@ -7,8 +7,8 @@ export const mockLessons = [
     title: 'How Credit Scores Work',
     description: 'Learn the five factors that shape your credit score and how lenders use them.',
     duration: '8 min',
-    completed: true,
-    quizScore: 90,
+    completed: false,
+    quizScore: null,
     content: [
       { type: 'text', body: 'Your credit score is a three-digit number — typically between 300 and 850 — that tells lenders how likely you are to repay borrowed money.' },
       { type: 'text', body: 'The most widely used scoring model is FICO. It weighs five factors: payment history (35%), amounts owed (30%), length of credit history (15%), new credit (10%), and credit mix (10%).' },
@@ -27,8 +27,8 @@ export const mockLessons = [
     title: 'The 50/30/20 Rule',
     description: 'A simple framework for allocating your take-home pay across needs, wants, and savings.',
     duration: '6 min',
-    completed: true,
-    quizScore: 100,
+    completed: false,
+    quizScore: null,
     content: [
       { type: 'text', body: 'The 50/30/20 rule divides your after-tax income into three buckets: 50% for needs, 30% for wants, and 20% for savings and debt repayment.' },
       { type: 'callout', label: 'Needs', body: 'Rent, groceries, utilities, insurance, minimum debt payments — things you genuinely cannot live without.' },
