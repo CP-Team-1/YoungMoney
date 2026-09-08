@@ -37,7 +37,8 @@ def get_card_advice(owned_cards, goals=""):
         prompt += f"\nGoals: {goals}"
 
     try:
-        response = _client().models.generate_content(
+        client = _client()
+        response = client.models.generate_content(
             model=GEMINI_MODEL,
             contents=prompt,
             config=genai.types.GenerateContentConfig(
