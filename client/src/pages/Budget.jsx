@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import AppShell from '../components/AppShell'
 import BudgetJar from '../components/BudgetJar'
+import LoadingState from '../components/LoadingState'
 import ProgressBar from '../components/ProgressBar'
 import { useFinancial } from '../context/FinancialContext'
 import { formatMoney } from '../utils/money'
@@ -103,6 +104,7 @@ function CategoryModal({ initial, onSave, onClose }) {
 
 export default function Budget() {
   const {
+    loading,
     income,
     categories,
     totalSpent,
@@ -118,6 +120,8 @@ export default function Budget() {
   const [showCatModal, setShowCatModal] = useState(false)
   const [editingCat, setEditingCat] = useState(null)
 
+  if (loading) return <AppShell><LoadingState /></AppShell>
+
   const unallocated = income - totalAllocated
 
   function startEditIncome() {
@@ -127,7 +131,7 @@ export default function Budget() {
 
   function commitIncome() {
     const val = parseFloat(incomeInput)
-    if (!isNaN(val) && val >= 0) updateIncome(val)
+    if (!isNaN(val) && val >= 0) updateIncome(val).catch(() => {})
     setEditingIncome(false)
   }
 
@@ -142,16 +146,16 @@ export default function Budget() {
 
   function handleCatSave(form) {
     if (editingCat) {
-      updateBudgetCategory(editingCat.id, { label: editingCat.label, allocated: form.allocated, color: form.color })
+      updateBudgetCategory(editingCat.id, { allocated: form.allocated, color: form.color }).catch(() => {})
     } else {
-      addBudgetCategory(form)
+      addBudgetCategory(form).catch(() => {})
     }
     closeCatModal()
   }
 
   function handleDeleteCat(id) {
     if (window.confirm('Delete this budget category?')) {
-      deleteBudgetCategory(id)
+      deleteBudgetCategory(id).catch(() => {})
     }
   }
 

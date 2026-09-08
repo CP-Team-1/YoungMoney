@@ -2,6 +2,7 @@ import { useState } from 'react'
 import AppShell from '../components/AppShell'
 import ExpenseEntry from '../components/ExpenseEntry'
 import EmptyState from '../components/EmptyState'
+import LoadingState from '../components/LoadingState'
 import { useFinancial } from '../context/FinancialContext'
 import { mockSpendingCategories } from '../data/mockSpending'
 import { formatMoney } from '../utils/money'
@@ -79,10 +80,12 @@ function TransactionModal({ initial, onSave, onClose }) {
 }
 
 export default function SpendLog() {
-  const { transactions, categories: budgetCategories, addTransaction, updateTransaction, deleteTransaction, clearTransactions } = useFinancial()
+  const { loading, transactions, categories: budgetCategories, addTransaction, updateTransaction, deleteTransaction, clearTransactions } = useFinancial()
   const [filter, setFilter] = useState(ALL)
   const [showModal, setShowModal] = useState(false)
   const [editingTx, setEditingTx] = useState(null)
+
+  if (loading) return <AppShell><LoadingState /></AppShell>
 
   const categories = [ALL, ...new Set(transactions.map((s) => s.category))]
   const filtered = filter === ALL ? transactions : transactions.filter((s) => s.category === filter)
@@ -94,20 +97,20 @@ export default function SpendLog() {
 
   function handleSave(form) {
     if (editingTx) {
-      updateTransaction(editingTx.id, form)
+      updateTransaction(editingTx.id, form).catch(() => {})
     } else {
-      addTransaction(form)
+      addTransaction(form).catch(() => {})
     }
     closeModal()
   }
 
   function handleDelete(id) {
-    deleteTransaction(id)
+    deleteTransaction(id).catch(() => {})
   }
 
   function handleClearAll() {
     if (window.confirm('Clear all transactions? This cannot be undone.')) {
-      clearTransactions()
+      clearTransactions().catch(() => {})
       setFilter(ALL)
     }
   }

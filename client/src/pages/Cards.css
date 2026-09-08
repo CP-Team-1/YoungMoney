@@ -39,7 +39,7 @@
 
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: var(--space-5);
 }
 
@@ -57,17 +57,26 @@
 .card-item:hover { border-color: var(--color-border-strong); }
 .card-item--owned { border-color: var(--color-sage-border); }
 
-.card-item__top { display: flex; justify-content: space-between; align-items: flex-start; }
-.card-item__right { display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-2); }
+.card-item__top { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-3); }
+.card-item__left { min-width: 0; flex: 1 1 auto; }
+.card-item__right { display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-2); flex-shrink: 0; }
 
 .card-item__issuer { font-size: 11px; color: var(--color-subtle); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
-.card-item__name { font-size: 16px; font-weight: 700; color: var(--color-text); }
+.card-item__name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .card-item__reward {
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  white-space: nowrap;
 }
 
 .card-item__owned-tag {
@@ -79,7 +88,52 @@
   padding: 2px 8px;
 }
 
-.card-item__highlights { display: flex; flex-direction: column; gap: var(--space-1); }
+.card-item__tabs { display: flex; gap: var(--space-2); }
+
+.card-item__tab {
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: all 0.15s;
+}
+
+.card-item__tab:hover { border-color: var(--color-border-strong); color: var(--color-text); }
+.card-item__tab--active { background: var(--color-orange-dim); border-color: var(--color-orange-border); color: var(--color-orange); }
+
+.card-item__highlights {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: var(--space-1);
+  height: 108px;
+  overflow-y: auto;
+  padding-right: var(--space-1);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) transparent;
+}
+
+.card-item__highlights::-webkit-scrollbar {
+  width: 6px;
+}
+
+.card-item__highlights::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.card-item__highlights::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: var(--radius-full);
+}
+
+.card-item__highlights::-webkit-scrollbar-thumb:hover {
+  background: var(--color-subtle);
+}
 
 .card-item__highlight {
   font-size: 13px;
@@ -118,12 +172,28 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: auto;
   padding-top: var(--space-3);
   border-top: 1px solid var(--color-border);
 }
 
+.card-item__fee-group { display: flex; flex-direction: column; gap: 2px; align-items: flex-start; }
 .card-item__fee { font-size: 12px; color: var(--color-muted); font-weight: 600; }
-.card-item__rating { font-size: 13px; color: var(--color-orange); font-weight: 700; }
+.card-item__effective-fee {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-sage);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.card-item__effective-fee:hover { opacity: 0.8; }
+.card-item__details-link { font-size: 12px; color: var(--color-orange); font-weight: 600; text-decoration: none; }
+.card-item__details-link:hover { text-decoration: underline; }
 
 .card-item__manage-btn {
   padding: 4px 12px;
@@ -201,6 +271,46 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: var(--space-5);
+}
+
+/* Effective-fee calculator modal */
+.calc-card-name { font-size: 14px; font-weight: 600; color: var(--color-text); margin-bottom: var(--space-4); }
+
+.calc-credit-list { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-5); }
+.calc-credit-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.calc-credit-item__label { display: flex; align-items: center; gap: var(--space-3); font-size: 13px; color: var(--color-text); cursor: pointer; }
+.calc-credit-item__value { font-size: 12px; color: var(--color-muted); font-weight: 600; white-space: nowrap; }
+
+.calc-summary {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--color-muted);
+  padding: var(--space-2) 0;
+}
+.calc-summary--total {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text);
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--space-2);
+  padding-top: var(--space-4);
+}
+
+.calc-ephemeral-note {
+  font-size: 12px;
+  color: var(--color-subtle);
+  font-style: italic;
+  margin-top: var(--space-4);
 }
 
 /* ─── AI Advisor Panel ─────────────────────────────────────── */

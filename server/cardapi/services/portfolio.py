@@ -11,6 +11,7 @@ from cardapi.models import (
     StatementCredit,
 )
 from cardapi.services.comparison import CardComparisonResult, value_reward_match
+from cardapi.services.credits import PERIODS_PER_YEAR as _PERIODS_PER_YEAR
 from cardapi.services.goals import PortfolioGoalSummary, summarize_portfolio_goals
 from cardapi.services.rewards import RewardMatchError, RewardMatchResult, match_reward_rate
 
@@ -99,13 +100,6 @@ class PortfolioAnalysis:
     candidates: tuple[CandidatePortfolioResult, ...]
     baseline_goal_summary: PortfolioGoalSummary | None = None
 
-
-_PERIODS_PER_YEAR = {
-    StatementCredit.Period.MONTHLY: Decimal("12"),
-    StatementCredit.Period.QUARTERLY: Decimal("4"),
-    StatementCredit.Period.SEMI_ANNUAL: Decimal("2"),
-    StatementCredit.Period.ANNUAL: Decimal("1"),
-}
 
 _CAP_PERIODS_PER_YEAR = {
     CCRewardRate.CapPeriod.MONTHLY: Decimal("12"),

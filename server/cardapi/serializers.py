@@ -16,6 +16,7 @@ from cardapi.models import (
     SignupBonus,
     StatementCredit,
 )
+from cardapi.services.credits import annualized_credit_value
 
 
 class IssuerSummarySerializer(serializers.ModelSerializer):
@@ -138,17 +139,24 @@ class SignupBonusSerializer(serializers.ModelSerializer):
 
 
 class StatementCreditSerializer(serializers.ModelSerializer):
+    annualized_amount = serializers.SerializerMethodField()
+
     class Meta:
         model = StatementCredit
         fields = (
+            "id",
             "name",
             "amount",
             "period",
+            "annualized_amount",
             "eligible_merchants",
             "enrollment_required",
             "notes",
             "verified_at",
         )
+
+    def get_annualized_amount(self, credit):
+        return annualized_credit_value(credit)
 
 
 class PerkSerializer(serializers.ModelSerializer):
@@ -230,6 +238,7 @@ class CreditCardDetailSerializer(CreditCardListSerializer):
     statement_credits = serializers.SerializerMethodField()
     perks = serializers.SerializerMethodField()
     transfer_partners = serializers.SerializerMethodField()
+    max_effective_annual_fee = serializers.SerializerMethodField()
 
     class Meta(CreditCardListSerializer.Meta):
         fields = CreditCardListSerializer.Meta.fields + (
@@ -242,6 +251,7 @@ class CreditCardDetailSerializer(CreditCardListSerializer):
             "statement_credits",
             "perks",
             "transfer_partners",
+            "max_effective_annual_fee",
         )
 
     def get_reward_rates(self, card):
@@ -269,6 +279,16 @@ class CreditCardDetailSerializer(CreditCardListSerializer):
     def get_perks(self, card):
         perks = card.perks.filter(is_active=True).order_by("name")
         return PerkSerializer(perks, many=True).data
+
+    def get_max_effective_annual_fee(self, card):
+        if card.annual_fee is None:
+            return None
+        credits = card.statement_credits.filter(is_active=True)
+        total_credit_value = sum(
+            (annualized_credit_value(credit) or Decimal("0") for credit in credits),
+            Decimal("0"),
+        )
+        return card.annual_fee - total_credit_value
 
     def get_transfer_partners(self, card):
         source_program_ids = card.reward_program_memberships.filter(
