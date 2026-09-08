@@ -351,7 +351,8 @@ function AiAdvisorPanel({ ownedCards }) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Cards() {
   const [cards, setCards] = useState([])
-  const [ownedIds, setOwnedIds] = useState(null) // null until cards load
+  const [ownedIds, setOwnedIds] = useState(new Set())
+  const [loadError, setLoadError] = useState('')
   const [creditUsesByCard, setCreditUsesByCard] = useState(new Map())
   const [effectiveFeeByCard, setEffectiveFeeByCard] = useState(new Map())
   const [filter, setFilter] = useState('All')
@@ -368,6 +369,7 @@ export default function Cards() {
         setCreditUsesByCard(new Map(ownedCards.map((o) => [o.cardSlug, o.usedCreditIds])))
         setEffectiveFeeByCard(new Map(ownedCards.map((o) => [o.cardSlug, o.effectiveAnnualFee])))
       })
+      .catch(() => setLoadError('Card data is temporarily unavailable. You can still ask the AI advisor for general recommendations.'))
       .finally(() => setLoading(false))
   }, [])
 
@@ -427,6 +429,8 @@ export default function Cards() {
             Find the best credit cards for your spending and get personalized AI advice.
           </p>
         </header>
+
+        {loadError && <p role="status">{loadError}</p>}
 
         {/* Your Cards */}
         <section className="cards-section">

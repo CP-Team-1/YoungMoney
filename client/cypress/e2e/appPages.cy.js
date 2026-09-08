@@ -1,4 +1,16 @@
 describe('YoungMoney Main App Pages', () => {
+  beforeEach(() => {
+    const cards = [
+      { slug: 'sapphire', name: 'Chase Sapphire Preferred', issuer: { name: 'Chase' }, annual_fee: '95', card_type: 'personal' },
+      { slug: 'blue-cash', name: 'Blue Cash Preferred', issuer: { name: 'Amex' }, annual_fee: '95', card_type: 'personal' },
+      { slug: 'double-cash', name: 'Citi Double Cash', issuer: { name: 'Citi' }, annual_fee: '0', card_type: 'personal' },
+    ]
+    cy.intercept('GET', '/api/wallet/cards/', []).as('getOwnedCards')
+    cy.intercept('GET', '/api/cards/?*', { results: cards }).as('getCards')
+    cards.forEach((card) => {
+      cy.intercept('GET', `/api/cards/${card.slug}/`, { ...card, max_effective_annual_fee: null })
+    })
+  })
 
   // TEST 1: Protected pages redirect logged-out users
   it('redirects a logged-out user to login', () => {
@@ -105,26 +117,31 @@ describe('YoungMoney Main App Pages', () => {
     cy.loginAsTestUser('/cards')
 
     cy.contains('h1', 'Card Optimizer').should('be.visible')
-    cy.contains('Chase Sapphire Preferred').should('be.visible')
+    cy.contains('Sapphire Preferred').should('be.visible')
     cy.contains('Blue Cash Preferred').should('be.visible')
-    cy.contains('Citi Double Cash').should('be.visible')
+    cy.contains('Double Cash').should('be.visible')
   })
 
 
   // TEST 9: Card Optimizer filters cards
-  it('filters cards by Travel', () => {
+  it('filters cards by annual fee', () => {
     cy.loginAsTestUser('/cards')
+    cy.contains('button', 'No annual fee').click()
+    cy.contains('Double Cash').should('be.visible')
+    cy.contains('Sapphire Preferred').should('not.exist')
+    cy.contains('Blue Cash Preferred').should('not.exist')
+  })
 
-    cy.contains('button', 'Travel').click()
-
-    cy.contains('Chase Sapphire Preferred')
-      .should('be.visible')
-
-    cy.contains('Capital One Venture')
-      .should('be.visible')
-
-    cy.contains('Citi Double Cash')
-      .should('not.exist')
+  it('keeps the AI advisor usable when card data is unavailable', () => {
+    cy.intercept('GET', '/api/cards/?*', { statusCode: 502, body: { detail: 'Unavailable' } })
+    cy.intercept('POST', '/api/advisor/suggest/', {
+      suggestion: 'Compare annual fees and rewards before choosing a card.',
+    }).as('getAdvice')
+    cy.loginAsTestUser('/cards')
+    cy.contains('Card data is temporarily unavailable.').should('be.visible')
+    cy.contains('button', 'Get AI Recommendations').click()
+    cy.wait('@getAdvice').its('request.body.owned_cards').should('deep.equal', [])
+    cy.contains('Compare annual fees and rewards before choosing a card.').should('be.visible')
   })
 
 
