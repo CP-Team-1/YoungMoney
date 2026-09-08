@@ -29,14 +29,16 @@ function computeEffectiveFee(card, usedCreditIds) {
 }
 
 // ─── Add-card modal ──────────────────────────────────────────────────────────
-function AddCardModal({ available, onAdd, onClose }) {
+function AddCardModal({ available, catalogEmpty, onAdd, onClose }) {
   return (
     <div className="sl-modal-overlay" onClick={onClose}>
       <div className="sl-modal" onClick={(e) => e.stopPropagation()}>
         <h2 className="sl-modal__title">Add Card to Your Wallet</h2>
         {available.length === 0 ? (
           <p style={{ color: 'var(--color-muted)', fontSize: 14 }}>
-            You already own all available cards.
+            {catalogEmpty
+              ? 'No cards are available to add right now. Try again in a moment.'
+              : 'You already own all available cards.'}
           </p>
         ) : (
           <ul className="add-card-list">
@@ -508,6 +510,7 @@ export default function Cards() {
       {showAddModal && (
         <AddCardModal
           available={notOwned}
+          catalogEmpty={cards.length === 0}
           onAdd={addCard}
           onClose={() => setShowAddModal(false)}
         />

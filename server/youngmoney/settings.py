@@ -239,23 +239,6 @@ if USE_HTTPS:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 
-# Email
-# https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
-#
-# Console backend prints outgoing mail (e.g. verification links) to the
-# backend container logs. Swap DJANGO_EMAIL_BACKEND for a real SMTP backend
-# once one is available.
-
-EMAIL_BACKEND = os.environ.get(
-    'DJANGO_EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend'
-)
-DEFAULT_FROM_EMAIL = os.environ.get('DJANGO_DEFAULT_FROM_EMAIL', 'noreply@youngmoney.local')
-
-# Base URL of the frontend, used to build links (e.g. email verification)
-# that point at the SPA rather than the API itself.
-FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:5173')
-
-
 # Gemini API (card setup advisor)
 #
 # Not validated at startup — checked lazily in advisor/services.py so the rest

@@ -1,10 +1,8 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
-from django.core.mail import send_mail
 from django.utils import timezone
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_decode
 from rest_framework import generics, permissions, status
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
@@ -19,18 +17,6 @@ from .serializers import RegisterSerializer, UserSerializer
 User = get_user_model()
 
 
-def send_verification_email(user):
-    uid = urlsafe_base64_encode(force_bytes(user.pk))
-    token = default_token_generator.make_token(user)
-    verify_url = f"{settings.FRONTEND_URL}/verify-email?uid={uid}&token={token}"
-    send_mail(
-        subject="Verify your YoungMoney account",
-        message=f"Verify your email by visiting: {verify_url}",
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=[user.email],
-    )
-
-
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]
@@ -38,7 +24,10 @@ class RegisterView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         user = serializer.save()
-        send_verification_email(user)
+        # Email verification is intentionally disabled. New accounts are active
+        # immediately so registration and login remain a single-step flow.
+        user.is_verified = True
+        user.save(update_fields=["is_verified"])
 
 
 class LockoutTokenObtainPairSerializer(TokenObtainPairSerializer):

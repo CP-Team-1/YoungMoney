@@ -19,10 +19,8 @@ deploy, set these explicitly (don't leave the example defaults):
 | `POSTGRES_PASSWORD` | A strong, unique password — not the dev value. |
 | `POSTGRES_DB`, `POSTGRES_USER` | Can keep the example values or change them; must match what the `db` service is initialized with. |
 | `CORS_ALLOWED_ORIGINS` | Your real frontend origin, e.g. `https://youngmoney.example.com`. Remove the localhost entries. |
-| `FRONTEND_URL` | Your real frontend origin (used to build links in outgoing email). |
 | `GEMINI_API_KEY` | Production Gemini API key. |
 | `CARDAPI_KEY` | Production CardAPI key. |
-| `DJANGO_EMAIL_BACKEND` / `DJANGO_DEFAULT_FROM_EMAIL` | Point at a real SMTP backend once one is available — the default console backend just logs mail to container output. |
 
 Treat every secret above as sensitive: keep `server/.env` off the host's
 backup/log paths, restrict file permissions, and never echo it in CI logs.
