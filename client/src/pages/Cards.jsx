@@ -4,9 +4,29 @@ import LoadingState from '../components/LoadingState'
 import EmptyState from '../components/EmptyState'
 import { getCards } from '../services/cards'
 import { getCardAdvice } from '../services/advisor'
+import { getOwnedCards, addOwnedCard, removeOwnedCard, setCreditUse } from '../services/wallet'
 import './Cards.css'
 
-const GOALS = ['All', 'Travel', 'Cashback', 'No annual fee', 'Groceries', 'Dining']
+const GOALS = ['All', 'No annual fee', 'Personal', 'Business']
+
+function formatUsd(value) {
+  const rounded = Math.round(value * 100) / 100
+  return Number.isInteger(rounded) ? `${rounded}` : `${parseFloat(rounded.toFixed(2))}`
+}
+
+function formatEffectiveFee(value) {
+  if (value == null) return null
+  return value < 0
+    ? `Net value: +$${formatUsd(Math.abs(value))}/yr`
+    : `Effective fee: $${formatUsd(value)}/yr`
+}
+
+function computeEffectiveFee(card, usedCreditIds) {
+  const totalCreditValue = card.statementCredits
+    .filter((c) => usedCreditIds.has(c.id) && c.annualizedAmount != null)
+    .reduce((sum, c) => sum + c.annualizedAmount, 0)
+  return card.annualFee - totalCreditValue
+}
 
 // ─── Add-card modal ──────────────────────────────────────────────────────────
 function AddCardModal({ available, onAdd, onClose }) {
@@ -55,7 +75,7 @@ function ManageCardModal({ card, onRemove, onClose }) {
           <p className="card-item__issuer">{card.issuer}</p>
           <h3 className="card-item__name" style={{ marginBottom: 'var(--space-3)' }}>{card.name}</h3>
           <ul className="card-item__highlights">
-            {card.highlights.map((h, i) => (
+            {card.rewardHighlights.map((h, i) => (
               <li key={i} className="card-item__highlight">{h}</li>
             ))}
           </ul>
@@ -75,20 +95,109 @@ function ManageCardModal({ card, onRemove, onClose }) {
   )
 }
 
+// ─── Effective-fee calculator modal ──────────────────────────────────────────
+function CreditFeeCalculatorModal({ card, owned, usedCreditIds, onToggle, onClose }) {
+  const [localUsed, setLocalUsed] = useState(
+    () => new Set(card.statementCredits.map((c) => c.id))
+  )
+  const activeUsed = owned ? usedCreditIds : localUsed
+  const effectiveFee = computeEffectiveFee(card, activeUsed)
+
+  function handleToggle(creditId, checked) {
+    if (owned) {
+      onToggle(creditId, checked)
+    } else {
+      setLocalUsed((prev) => {
+        const next = new Set(prev)
+        if (checked) next.add(creditId)
+        else next.delete(creditId)
+        return next
+      })
+    }
+  }
+
+  return (
+    <div className="sl-modal-overlay" onClick={onClose}>
+      <div className="sl-modal" onClick={(e) => e.stopPropagation()}>
+        <h2 className="sl-modal__title">Effective Fee Calculator</h2>
+        <p className="calc-card-name">{card.name}</p>
+
+        {card.statementCredits.length === 0 ? (
+          <p style={{ color: 'var(--color-muted)', fontSize: 14 }}>
+            This card has no statement credits to offset its annual fee.
+          </p>
+        ) : (
+          <ul className="calc-credit-list">
+            {card.statementCredits.map((c) => (
+              <li key={c.id} className="calc-credit-item">
+                <label className="calc-credit-item__label">
+                  <input
+                    type="checkbox"
+                    checked={activeUsed.has(c.id)}
+                    onChange={(e) => handleToggle(c.id, e.target.checked)}
+                  />
+                  <span>{c.name}</span>
+                </label>
+                <span className="calc-credit-item__value">
+                  {c.annualizedAmount != null ? `$${formatUsd(c.annualizedAmount)}/yr` : '—'}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <div className="calc-summary">
+          <span>Raw annual fee</span>
+          <span>${formatUsd(card.annualFee)}/yr</span>
+        </div>
+        <div className="calc-summary calc-summary--total">
+          <span>{effectiveFee < 0 ? 'Net value' : 'Effective annual fee'}</span>
+          <span>
+            {effectiveFee < 0 ? `+$${formatUsd(Math.abs(effectiveFee))}/yr` : `$${formatUsd(effectiveFee)}/yr`}
+          </span>
+        </div>
+
+        {!owned && (
+          <p className="calc-ephemeral-note">
+            Add this card to your wallet to save your selections.
+          </p>
+        )}
+
+        <div className="sl-modal__actions" style={{ marginTop: 'var(--space-5)' }}>
+          <button type="button" className="sl-btn sl-btn--ghost" onClick={onClose}>Close</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const CARD_TABS = [
+  { key: 'rewards', label: 'Multipliers' },
+  { key: 'perks', label: 'Perks' },
+  { key: 'credits', label: 'Credits' },
+  { key: 'transferPartners', label: 'Travel Partners' },
+]
+
 // ─── Card tile ───────────────────────────────────────────────────────────────
-function CardItem({ card, owned, onEdit }) {
-  const rewardColor = {
-    cashback: 'var(--color-sage)',
-    points: 'var(--color-orange)',
-    miles: '#8fa8c8',
-  }[card.rewardType] ?? 'var(--color-muted)'
+function CardItem({ card, owned, effectiveFee, onEdit, onCalculate }) {
+  const rewardColor = 'var(--color-muted)'
+  const [tab, setTab] = useState('rewards')
+  const effectiveFeeText = formatEffectiveFee(owned ? effectiveFee : card.maxEffectiveAnnualFee)
+
+  const itemsByTab = {
+    rewards: card.rewardHighlights,
+    perks: card.perkHighlights,
+    credits: card.creditHighlights,
+    transferPartners: card.transferPartnerHighlights,
+  }
+  const visibleTabs = CARD_TABS.filter((t) => (itemsByTab[t.key] || []).length > 0)
 
   return (
     <div className={`card-item${owned ? ' card-item--owned' : ''}`}>
       <div className="card-item__top">
-        <div>
+        <div className="card-item__left">
           <p className="card-item__issuer">{card.issuer}</p>
-          <h3 className="card-item__name">{card.name}</h3>
+          <h3 className="card-item__name" title={card.name}>{card.name}</h3>
         </div>
         <div className="card-item__right">
           <span className="card-item__reward" style={{ color: rewardColor }}>
@@ -98,8 +207,21 @@ function CardItem({ card, owned, onEdit }) {
         </div>
       </div>
 
+      <div className="card-item__tabs">
+        {visibleTabs.map((t) => (
+          <button
+            key={t.key}
+            type="button"
+            className={`card-item__tab${tab === t.key ? ' card-item__tab--active' : ''}`}
+            onClick={() => setTab(t.key)}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
       <ul className="card-item__highlights">
-        {card.highlights.map((h, i) => (
+        {itemsByTab[tab].map((h, i) => (
           <li key={i} className="card-item__highlight">{h}</li>
         ))}
       </ul>
@@ -112,8 +234,29 @@ function CardItem({ card, owned, onEdit }) {
       )}
 
       <div className="card-item__foot">
-        <span className="card-item__fee">{card.annualFee === 0 ? 'No annual fee' : `$${card.annualFee}/yr`}</span>
-        <span className="card-item__rating">★ {card.rating}</span>
+        <div className="card-item__fee-group">
+          <span className="card-item__fee">{card.annualFee === 0 ? 'No annual fee' : `$${card.annualFee}/yr`}</span>
+          {effectiveFeeText && (
+            <button
+              type="button"
+              className="card-item__effective-fee"
+              onClick={() => onCalculate(card)}
+              title="Open the effective-fee calculator"
+            >
+              {effectiveFeeText}
+            </button>
+          )}
+        </div>
+        {card.productUrl && (
+          <a
+            className="card-item__details-link"
+            href={card.productUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            View details ↗
+          </a>
+        )}
         {owned && onEdit && (
           <button
             type="button"
@@ -209,16 +352,23 @@ function AiAdvisorPanel({ ownedCards }) {
 export default function Cards() {
   const [cards, setCards] = useState([])
   const [ownedIds, setOwnedIds] = useState(null) // null until cards load
+  const [creditUsesByCard, setCreditUsesByCard] = useState(new Map())
+  const [effectiveFeeByCard, setEffectiveFeeByCard] = useState(new Map())
   const [filter, setFilter] = useState('All')
   const [loading, setLoading] = useState(true)
   const [showAddModal, setShowAddModal] = useState(false)
   const [managingCard, setManagingCard] = useState(null)
+  const [calculatingCard, setCalculatingCard] = useState(null)
 
   useEffect(() => {
-    getCards().then((data) => {
-      setCards(data)
-      setOwnedIds(new Set(data.filter((c) => c.owned).map((c) => c.id)))
-    }).finally(() => setLoading(false))
+    Promise.all([getCards(), getOwnedCards()])
+      .then(([cardData, ownedCards]) => {
+        setCards(cardData)
+        setOwnedIds(new Set(ownedCards.map((o) => o.cardSlug)))
+        setCreditUsesByCard(new Map(ownedCards.map((o) => [o.cardSlug, o.usedCreditIds])))
+        setEffectiveFeeByCard(new Map(ownedCards.map((o) => [o.cardSlug, o.effectiveAnnualFee])))
+      })
+      .finally(() => setLoading(false))
   }, [])
 
   if (loading) return <AppShell><LoadingState /></AppShell>
@@ -228,15 +378,44 @@ export default function Cards() {
 
   const filtered = filter === 'All'
     ? cards
-    : cards.filter((c) => c.bestFor.some((b) => b.toLowerCase() === filter.toLowerCase()))
+    : filter === 'No annual fee'
+      ? cards.filter((c) => c.annualFee === 0)
+      : cards.filter((c) => c.cardType === filter.toLowerCase())
 
-  function addCard(id) {
+  async function addCard(id) {
     setOwnedIds((prev) => new Set([...prev, id]))
     setShowAddModal(false)
+    try {
+      const ownedCard = await addOwnedCard(id)
+      setCreditUsesByCard((prev) => new Map(prev).set(id, ownedCard.usedCreditIds))
+      setEffectiveFeeByCard((prev) => new Map(prev).set(id, ownedCard.effectiveAnnualFee))
+    } catch {
+      setOwnedIds((prev) => { const next = new Set(prev); next.delete(id); return next })
+    }
   }
 
   function removeCard(id) {
     setOwnedIds((prev) => { const next = new Set(prev); next.delete(id); return next })
+    removeOwnedCard(id).catch(() => {
+      setOwnedIds((prev) => new Set([...prev, id]))
+    })
+  }
+
+  async function toggleCredit(card, creditId, used) {
+    const prevUsedIds = creditUsesByCard.get(card.id) || new Set()
+    const nextUsedIds = new Set(prevUsedIds)
+    if (used) nextUsedIds.add(creditId)
+    else nextUsedIds.delete(creditId)
+
+    setCreditUsesByCard((prev) => new Map(prev).set(card.id, nextUsedIds))
+    setEffectiveFeeByCard((prev) => new Map(prev).set(card.id, computeEffectiveFee(card, nextUsedIds)))
+
+    try {
+      await setCreditUse(card.id, creditId, used)
+    } catch {
+      setCreditUsesByCard((prev) => new Map(prev).set(card.id, prevUsedIds))
+      setEffectiveFeeByCard((prev) => new Map(prev).set(card.id, computeEffectiveFee(card, prevUsedIds)))
+    }
   }
 
   return (
@@ -271,7 +450,9 @@ export default function Cards() {
                   key={card.id}
                   card={card}
                   owned
+                  effectiveFee={effectiveFeeByCard.get(card.id)}
                   onEdit={setManagingCard}
+                  onCalculate={setCalculatingCard}
                 />
               ))}
             </div>
@@ -301,7 +482,13 @@ export default function Cards() {
           ) : (
             <div className="cards-grid">
               {filtered.map((card) => (
-                <CardItem key={card.id} card={card} owned={ownedIds.has(card.id)} />
+                <CardItem
+                  key={card.id}
+                  card={card}
+                  owned={ownedIds.has(card.id)}
+                  effectiveFee={effectiveFeeByCard.get(card.id)}
+                  onCalculate={setCalculatingCard}
+                />
               ))}
             </div>
           )}
@@ -327,6 +514,16 @@ export default function Cards() {
           card={managingCard}
           onRemove={removeCard}
           onClose={() => setManagingCard(null)}
+        />
+      )}
+
+      {calculatingCard && (
+        <CreditFeeCalculatorModal
+          card={calculatingCard}
+          owned={ownedIds.has(calculatingCard.id)}
+          usedCreditIds={creditUsesByCard.get(calculatingCard.id) || new Set()}
+          onToggle={(creditId, checked) => toggleCredit(calculatingCard, creditId, checked)}
+          onClose={() => setCalculatingCard(null)}
         />
       )}
     </AppShell>

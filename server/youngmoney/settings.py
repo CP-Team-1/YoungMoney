@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'advisor',
     'cardapi',
     'goals',
+    'wallet',
 ]
 
 MIDDLEWARE = [

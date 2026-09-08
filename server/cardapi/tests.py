@@ -37,6 +37,7 @@ from cardapi.services.cardapi import (
 )
 from cardapi.services.coverage import build_coverage_report
 from cardapi.services.comparison import compare_cards
+from cardapi.services.credits import annualized_credit_value
 from cardapi.services.portfolio import (
     BonusEligibility,
     SignupBonusUse,
@@ -98,6 +99,48 @@ CARD_PAYLOAD = {
         }
     ]
 }
+
+
+class AnnualizedCreditValueTests(TestCase):
+    def setUp(self):
+        self.issuer = Issuer.objects.create(slug="credit-value-bank", name="Bank")
+        self.card = CreditCard.objects.create(
+            local_slug="credit-value-card", issuer=self.issuer, name="Card"
+        )
+
+    def _credit(self, **kwargs):
+        defaults = {
+            "credit_card": self.card,
+            "name": "Credit",
+            "amount": Decimal("25"),
+            "period": StatementCredit.Period.MONTHLY,
+        }
+        defaults.update(kwargs)
+        return StatementCredit(**defaults)
+
+    def test_annualizes_by_period(self):
+        cases = {
+            StatementCredit.Period.MONTHLY: Decimal("300"),
+            StatementCredit.Period.QUARTERLY: Decimal("100"),
+            StatementCredit.Period.SEMI_ANNUAL: Decimal("50"),
+            StatementCredit.Period.ANNUAL: Decimal("25"),
+        }
+        for period, expected in cases.items():
+            with self.subTest(period=period):
+                credit = self._credit(period=period)
+                self.assertEqual(annualized_credit_value(credit), expected)
+
+    def test_none_when_inactive(self):
+        credit = self._credit(is_active=False)
+        self.assertIsNone(annualized_credit_value(credit))
+
+    def test_none_when_amount_missing(self):
+        credit = self._credit(amount=None)
+        self.assertIsNone(annualized_credit_value(credit))
+
+    def test_none_when_period_unknown(self):
+        credit = self._credit(period=None)
+        self.assertIsNone(annualized_credit_value(credit))
 
 
 class CardAPIMaintenanceCommandTests(TestCase):
@@ -1634,6 +1677,42 @@ class CardCatalogAPITests(TestCase):
         )
         self.assertNotIn("source_key", response.data["reward_rates"][0])
         self.assertNotIn("source_url", response.data["reward_rates"][0])
+
+        credit = response.data["statement_credits"][0]
+        self.assertIn("id", credit)
+        self.assertEqual(Decimal(str(credit["annualized_amount"])), Decimal("100"))
+        # annual_fee=95, one $100/yr credit → fully utilized this is a net rebate.
+        self.assertEqual(
+            Decimal(str(response.data["max_effective_annual_fee"])), Decimal("-5")
+        )
+
+    def test_max_effective_annual_fee_is_null_when_fee_unknown(self):
+        self.card.annual_fee = None
+        self.card.save(update_fields=["annual_fee"])
+
+        response = self.client.get(
+            reverse("cardapi:card-detail", kwargs={"slug": self.card.local_slug})
+        )
+
+        self.assertIsNone(response.data["max_effective_annual_fee"])
+
+    def test_max_effective_annual_fee_ignores_inactive_credits(self):
+        StatementCredit.objects.create(
+            credit_card=self.card,
+            name="Inactive Credit",
+            amount=1000,
+            period=StatementCredit.Period.ANNUAL,
+            source_key="inactive-credit",
+            is_active=False,
+        )
+
+        response = self.client.get(
+            reverse("cardapi:card-detail", kwargs={"slug": self.card.local_slug})
+        )
+
+        self.assertEqual(
+            Decimal(str(response.data["max_effective_annual_fee"])), Decimal("-5")
+        )
 
     def test_discontinued_card_remains_available_by_direct_slug(self):
         response = self.client.get(
