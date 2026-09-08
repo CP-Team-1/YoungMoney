@@ -194,7 +194,7 @@ function GoalCard({ goal, onSavingsAction }) {
 export default function Dashboard() {
   const { user } = useAuth()
   const navigate = useNavigate()
-  const { income, totalSpent, remaining, transactions, categories } = useFinancial()
+  const { income, totalSpent, transactions, categories } = useFinancial()
   const { goals, addToGoal, withdrawFromGoal, updateGoalTarget } = useGoals()
   const { lessons, completedArticleIds, completedLessonIds, quizAttempts, resetQuizProgress } = useLearning()
 
