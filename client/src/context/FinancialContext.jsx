@@ -89,7 +89,6 @@ export function FinancialProvider({ children }) {
       return
     }
 
-    setLoading(true)
 
     Promise.all([
       budgetService.getIncome(),

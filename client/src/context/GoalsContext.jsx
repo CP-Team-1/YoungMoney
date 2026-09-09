@@ -71,14 +71,9 @@ export function GoalsProvider({
 
   useEffect(() => {
     if (!user) {
-      setGoals([])
-      setGoalTypes([])
-      setLoading(false)
-
+      
       return
     }
-
-    setLoading(true)
 
     Promise.all([
       goalService.getGoalTypes(),
