@@ -12,8 +12,8 @@ const CATEGORY_COLORS = {
   other: '#9a8f82',
 }
 
-// color prop is optional — when provided (from budget category user choice) it overrides the default map
-export default function ExpenseEntry({ entry, onEdit, onDelete, color: colorProp }) {
+// color and categoryLabel props are optional — from matched budget category
+export default function ExpenseEntry({ entry, onEdit, onDelete, color: colorProp, categoryLabel }) {
   const { merchant, category, amount, date } = entry
   const color = colorProp ?? CATEGORY_COLORS[category] ?? '#9a8f82'
   const displayDate = new Date(date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
@@ -23,7 +23,7 @@ export default function ExpenseEntry({ entry, onEdit, onDelete, color: colorProp
       <div className="expense-entry__dot" style={{ background: color }} />
       <div className="expense-entry__info">
         <p className="expense-entry__merchant">{merchant}</p>
-        <p className="expense-entry__category">{category}</p>
+        <p className="expense-entry__category">{categoryLabel ?? category}</p>
       </div>
       <div className="expense-entry__right">
         <p className="expense-entry__amount">-{formatMoney(amount)}</p>

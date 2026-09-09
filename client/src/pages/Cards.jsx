@@ -181,7 +181,7 @@ const CARD_TABS = [
 ]
 
 // ─── Card tile ───────────────────────────────────────────────────────────────
-function CardItem({ card, owned, effectiveFee, onEdit, onCalculate }) {
+function CardItem({ card, owned, effectiveFee, onAdd, onEdit, onCalculate }) {
   const rewardColor = 'var(--color-muted)'
   const [tab, setTab] = useState('rewards')
   const effectiveFeeText = formatEffectiveFee(owned ? effectiveFee : card.maxEffectiveAnnualFee)
@@ -258,6 +258,15 @@ function CardItem({ card, owned, effectiveFee, onEdit, onCalculate }) {
           >
             View details ↗
           </a>
+        )}
+        {!owned && onAdd && (
+          <button
+            type="button"
+            className="sl-btn sl-btn--primary card-item__add-btn"
+            onClick={() => onAdd(card.id)}
+          >
+            + Add Card
+          </button>
         )}
         {owned && onEdit && (
           <button
@@ -493,6 +502,7 @@ export default function Cards() {
                   card={card}
                   owned={ownedIds.has(card.id)}
                   effectiveFee={effectiveFeeByCard.get(card.id)}
+                  onAdd={ownedIds.has(card.id) ? null : addCard}
                   onCalculate={setCalculatingCard}
                 />
               ))}

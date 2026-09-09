@@ -40,19 +40,27 @@
 
 .today__checklist { display: flex; flex-direction: column; gap: var(--space-3); }
 
+.today__check-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-4) var(--space-4) var(--space-5);
+  transition: border-color 0.15s;
+}
+
+.today__check-row:hover { border-color: var(--color-border-strong); }
+
 .today__check-item {
   display: flex;
   align-items: center;
   gap: var(--space-4);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-4) var(--space-5);
+  flex: 1;
   cursor: pointer;
-  transition: border-color 0.15s;
+  min-width: 0;
 }
-
-.today__check-item:hover { border-color: var(--color-border-strong); }
 
 .today__checkbox {
   width: 18px;
@@ -62,7 +70,72 @@
   flex-shrink: 0;
 }
 
-.today__check-label { font-size: 15px; color: var(--color-text); }
+.today__check-label {
+  font-size: 15px;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.today__check-label--done {
+  text-decoration: line-through;
+  opacity: 0.55;
+}
+
+.today__delete-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  font-size: 20px;
+  line-height: 1;
+  padding: 0 var(--space-1);
+  cursor: pointer;
+  opacity: 0.4;
+  transition: opacity 0.15s, color 0.15s;
+}
+
+.today__delete-btn:hover { opacity: 1; color: var(--color-red, #e05050); }
+
+.today__add-task-btn {
+  margin-top: var(--space-3);
+  background: none;
+  border: none;
+  color: var(--color-orange);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: var(--space-1) 0;
+  display: inline-block;
+}
+
+.today__add-task-btn:hover { opacity: 0.75; }
+
+.today__add-form {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.today__add-input {
+  flex: 1;
+  min-width: 140px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.today__add-input:focus {
+  outline: none;
+  border-color: var(--color-orange);
+}
+
+.today__loading { color: var(--color-muted); font-size: 14px; }
 
 .today__streak {
   display: flex;

@@ -1,103 +1,480 @@
-import { createContext, useCallback, useContext, useState } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 
-const GoalsContext = createContext(null)
+import * as goalService from '../services/goals'
+import { useAuth } from './AuthContext'
 
-// backend integration point: replace with GET /api/goals/types/
-// Custom goal type note for backend developer: the 'custom' sentinel is frontend-only.
-// When persisting, the backend will need either a free-text goal_type field or a
-// dedicated "Other" GoalType record that allows a user-supplied label.
-export const CUSTOM_GOAL_TYPE_ID = 'custom'
+const GoalsContext =
+  createContext(null)
 
-const GOAL_TYPES = [
-  { id: 1, goal: 'Emergency Fund', is_savings: true },
-  { id: 2, goal: 'Savings', is_savings: true },
-  { id: 3, goal: 'First Home', is_savings: false },
-  { id: 4, goal: 'New Car', is_savings: false },
-  { id: 5, goal: 'Vacation', is_savings: false },
-  { id: 6, goal: 'Debt Payoff', is_savings: false },
-  { id: 7, goal: 'Investment', is_savings: false },
-  { id: 8, goal: 'Education', is_savings: false },
-]
+export const CUSTOM_GOAL_TYPE_ID =
+  'custom'
 
-let nextGoalId = 1
+function sortGoals(goals) {
+  return [...goals].sort(
+    (a, b) =>
+      a.name.localeCompare(
+        b.name
+      )
+  )
+}
 
-export function GoalsProvider({ children }) {
-  // backend integration point: initialize from GET /api/goals/ and persist mutations
-  const [goals, setGoals] = useState([])
+function normalizeGoal(goal) {
+  return {
+    ...goal,
+    goal:
+      goal.goal === null
+        ? CUSTOM_GOAL_TYPE_ID
+        : goal.goal,
+    target: Number(
+      goal.target
+    ),
+    current: Number(
+      goal.current ?? 0
+    ),
+    notes:
+      goal.notes ?? '',
+    custom_goal_type:
+      goal.custom_goal_type ??
+      '',
+  }
+}
 
-  const addGoal = useCallback(({ goal: goalTypeId, name, target, notes = '', customGoalType = '' }) => {
-    const isCustom = goalTypeId === CUSTOM_GOAL_TYPE_ID
-    const type = isCustom ? null : GOAL_TYPES.find((t) => t.id === Number(goalTypeId))
-    const newGoal = {
-      id: nextGoalId++,
-      goal: isCustom ? CUSTOM_GOAL_TYPE_ID : Number(goalTypeId),
-      goal_name: isCustom ? customGoalType.trim() : (type?.goal ?? 'Goal'),
-      is_savings: isCustom ? false : (type?.is_savings ?? false),
-      name,
-      target: parseFloat(target),
-      notes,
-      current: 0,
+export function GoalsProvider({
+  children,
+}) {
+  const { user } =
+    useAuth()
+
+  const [goals, setGoals] =
+    useState([])
+
+  const [
+    goalTypes,
+    setGoalTypes,
+  ] = useState([])
+
+  const [
+    loading,
+    setLoading,
+  ] = useState(
+    () =>
+      !!localStorage.getItem(
+        'access_token'
+      )
+  )
+
+  useEffect(() => {
+    if (!user) {
+      setGoals([])
+      setGoalTypes([])
+      setLoading(false)
+
+      return
     }
-    setGoals((prev) => [...prev, newGoal].sort((a, b) => a.name.localeCompare(b.name)))
-    return newGoal
-  }, [])
 
-  const deleteGoal = useCallback((id) => {
-    setGoals((prev) => prev.filter((g) => g.id !== id))
-  }, [])
+    setLoading(true)
 
-  // backend integration point: persist via PATCH /api/goals/:id/ { current }
-  const addToGoal = useCallback((id, amount) => {
-    setGoals((prev) =>
-      prev.map((g) =>
-        g.id === id
-          ? { ...g, current: Math.round((g.current + amount) * 100) / 100 }
-          : g
-      )
-    )
-  }, [])
+    Promise.all([
+      goalService.getGoalTypes(),
+      goalService.getGoals(),
+    ])
+      .then(
+        ([
+          types,
+          savedGoals,
+        ]) => {
+          setGoalTypes(types)
 
-  const withdrawFromGoal = useCallback((id, amount) => {
-    setGoals((prev) =>
-      prev.map((g) =>
-        g.id === id
-          ? { ...g, current: Math.round(Math.max(0, g.current - amount) * 100) / 100 }
-          : g
-      )
-    )
-  }, [])
-
-  const updateGoalTarget = useCallback((id, target) => {
-    setGoals((prev) =>
-      prev.map((g) => (g.id === id ? { ...g, target: parseFloat(target) } : g))
-    )
-  }, [])
-
-  // backend integration point: persist via PATCH /api/goals/:id/
-  const updateGoal = useCallback((id, updates) => {
-    setGoals((prev) =>
-      prev.map((g) => {
-        if (g.id !== id) return g
-        return {
-          ...g,
-          ...updates,
-          target: updates.target !== undefined ? parseFloat(updates.target) : g.target,
+          setGoals(
+            sortGoals(
+              savedGoals.map(
+                normalizeGoal
+              )
+            )
+          )
         }
+      )
+      .catch((err) => {
+        console.error(
+          'Failed to load goals',
+          err
+        )
       })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [user])
+
+  const addGoal =
+    useCallback(
+      async ({
+        goal:
+          goalTypeId,
+        name,
+        target,
+        notes = '',
+        customGoalType = '',
+      }) => {
+        const isCustom =
+          goalTypeId ===
+          CUSTOM_GOAL_TYPE_ID
+
+        const payload =
+          isCustom
+            ? {
+                goal: null,
+                custom_goal_type:
+                  customGoalType.trim(),
+                name:
+                  name.trim(),
+                target:
+                  parseFloat(
+                    target
+                  ),
+                current: 0,
+                notes:
+                  notes.trim(),
+              }
+            : {
+                goal:
+                  Number(
+                    goalTypeId
+                  ),
+                custom_goal_type:
+                  '',
+                name:
+                  name.trim(),
+                target:
+                  parseFloat(
+                    target
+                  ),
+                current: 0,
+                notes:
+                  notes.trim(),
+              }
+
+        const created =
+          normalizeGoal(
+            await goalService.addGoal(
+              payload
+            )
+          )
+
+        setGoals(
+          (previous) =>
+            sortGoals([
+              ...previous,
+              created,
+            ])
+        )
+
+        return created
+      },
+      []
     )
-  }, [])
+
+  const deleteGoal =
+    useCallback(
+      async (id) => {
+        let removedGoal
+
+        setGoals(
+          (previous) => {
+            removedGoal =
+              previous.find(
+                (goal) =>
+                  goal.id === id
+              )
+
+            return previous.filter(
+              (goal) =>
+                goal.id !== id
+            )
+          }
+        )
+
+        try {
+          await goalService.deleteGoal(
+            id
+          )
+        } catch (err) {
+          if (removedGoal) {
+            setGoals(
+              (previous) =>
+                sortGoals([
+                  ...previous,
+                  removedGoal,
+                ])
+            )
+          }
+
+          throw err
+        }
+      },
+      []
+    )
+
+  const updateGoal =
+    useCallback(
+      async (
+        id,
+        updates
+      ) => {
+        let previousGoal
+
+        const goal =
+          goals.find(
+            (item) =>
+              item.id === id
+          )
+
+        if (!goal) {
+          return
+        }
+
+        const isCustom =
+          goal.goal ===
+          CUSTOM_GOAL_TYPE_ID
+
+        const payload = {
+          ...updates,
+        }
+
+        if (
+          payload.target !==
+          undefined
+        ) {
+          payload.target =
+            parseFloat(
+              payload.target
+            )
+        }
+
+        if (
+          payload.current !==
+          undefined
+        ) {
+          payload.current =
+            parseFloat(
+              payload.current
+            )
+        }
+
+        if (
+          isCustom &&
+          payload.goal_name !==
+            undefined
+        ) {
+          payload.custom_goal_type =
+            payload.goal_name.trim()
+
+          delete payload.goal_name
+        }
+
+        setGoals(
+          (previous) =>
+            sortGoals(
+              previous.map(
+                (item) => {
+                  if (
+                    item.id !==
+                    id
+                  ) {
+                    return item
+                  }
+
+                  previousGoal =
+                    item
+
+                  return {
+                    ...item,
+                    ...updates,
+                    target:
+                      updates.target !==
+                      undefined
+                        ? parseFloat(
+                            updates.target
+                          )
+                        : item.target,
+                    current:
+                      updates.current !==
+                      undefined
+                        ? parseFloat(
+                            updates.current
+                          )
+                        : item.current,
+                    goal_name:
+                      isCustom &&
+                      updates.goal_name
+                        ? updates.goal_name
+                        : item.goal_name,
+                  }
+                }
+              )
+            )
+        )
+
+        try {
+          const updated =
+            normalizeGoal(
+              await goalService.updateGoal(
+                id,
+                payload
+              )
+            )
+
+          setGoals(
+            (previous) =>
+              sortGoals(
+                previous.map(
+                  (item) =>
+                    item.id === id
+                      ? updated
+                      : item
+                )
+              )
+          )
+
+          return updated
+        } catch (err) {
+          if (previousGoal) {
+            setGoals(
+              (previous) =>
+                sortGoals(
+                  previous.map(
+                    (item) =>
+                      item.id === id
+                        ? previousGoal
+                        : item
+                  )
+                )
+            )
+          }
+
+          throw err
+        }
+      },
+      [goals]
+    )
+
+  const addToGoal =
+    useCallback(
+      async (
+        id,
+        amount
+      ) => {
+        const goal =
+          goals.find(
+            (item) =>
+              item.id === id
+          )
+
+        if (!goal) {
+          return
+        }
+
+        const newCurrent =
+          Math.round(
+            (
+              goal.current +
+              parseFloat(
+                amount
+              )
+            ) *
+              100
+          ) / 100
+
+        return updateGoal(
+          id,
+          {
+            current:
+              newCurrent,
+          }
+        )
+      },
+      [
+        goals,
+        updateGoal,
+      ]
+    )
+
+  const withdrawFromGoal =
+    useCallback(
+      async (
+        id,
+        amount
+      ) => {
+        const goal =
+          goals.find(
+            (item) =>
+              item.id === id
+          )
+
+        if (!goal) {
+          return
+        }
+
+        const newCurrent =
+          Math.round(
+            Math.max(
+              0,
+              goal.current -
+                parseFloat(
+                  amount
+                )
+            ) * 100
+          ) / 100
+
+        return updateGoal(
+          id,
+          {
+            current:
+              newCurrent,
+          }
+        )
+      },
+      [
+        goals,
+        updateGoal,
+      ]
+    )
+
+  const updateGoalTarget =
+    useCallback(
+      async (
+        id,
+        target
+      ) =>
+        updateGoal(
+          id,
+          {
+            target:
+              parseFloat(
+                target
+              ),
+          }
+        ),
+      [updateGoal]
+    )
 
   return (
     <GoalsContext.Provider
       value={{
+        loading,
         goals,
-        goalTypes: GOAL_TYPES,
+        goalTypes,
         addGoal,
         deleteGoal,
+        updateGoal,
         addToGoal,
         withdrawFromGoal,
         updateGoalTarget,
-        updateGoal,
       }}
     >
       {children}
@@ -107,7 +484,16 @@ export function GoalsProvider({ children }) {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function useGoals() {
-  const ctx = useContext(GoalsContext)
-  if (!ctx) throw new Error('useGoals must be used inside GoalsProvider')
+  const ctx =
+    useContext(
+      GoalsContext
+    )
+
+  if (!ctx) {
+    throw new Error(
+      'useGoals must be used inside GoalsProvider'
+    )
+  }
+
   return ctx
 }

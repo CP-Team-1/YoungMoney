@@ -111,3 +111,61 @@ class SpendLogEntry(models.Model):
 
     def __str__(self):
         return f"{self.user}: {self.merchant} ({self.amount})"
+
+
+class DailyTask(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="daily_tasks",
+        on_delete=models.CASCADE,
+    )
+    title = models.CharField(max_length=200)
+    order = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["order", "created_at"]
+
+    def __str__(self):
+        return f"{self.user}: {self.title}"
+
+
+class DailyTaskCompletion(models.Model):
+    task = models.ForeignKey(
+        DailyTask,
+        related_name="completions",
+        on_delete=models.CASCADE,
+    )
+    date = models.DateField()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["task", "date"],
+                name="unique_task_completion_per_day",
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.task}: {self.date}"
+
+
+class ArticleRead(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="article_reads",
+        on_delete=models.CASCADE,
+    )
+    article_id = models.CharField(max_length=100)
+    read_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "article_id"],
+                name="unique_article_read",
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.user}: {self.article_id}"

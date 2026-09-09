@@ -1,11 +1,12 @@
-import { createContext, useCallback, useContext, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { mockLessons } from '../data/mockLessons'
+import { getArticleReads, markArticleReadApi, markArticleUnreadApi } from '../services/learning'
+import { useAuth } from './AuthContext'
 
 const LearningContext = createContext(null)
 
 export function LearningProvider({ children }) {
-  // backend integration point: initialize all three from their respective API endpoints
-  // persist article reads via POST /api/articles/:id/read/
+  const { user } = useAuth()
   const [completedArticleIds, setCompletedArticleIds] = useState(new Set())
 
   // persist lesson completions via POST /api/lessons/:id/complete/
@@ -15,6 +16,17 @@ export function LearningProvider({ children }) {
   // quizAttempts shape: { [lessonId]: { attempts: number, bestScore: number, latestScore: number } }
   const [quizAttempts, setQuizAttempts] = useState({})
 
+  // Re-fetch article reads whenever the authenticated user changes.
+  // The [] dep array meant the effect only ran once on mount — a 401 during the
+  // logged-out phase was silently swallowed and never retried after login.
+  // setState is only called inside the async .then() callback, satisfying the lint rule.
+  useEffect(() => {
+    if (!user) return
+    getArticleReads()
+      .then((ids) => setCompletedArticleIds(new Set(ids)))
+      .catch(() => {})
+  }, [user])
+
   // Derive lessons array so LessonCard and LearningHub get reactive completed/quizScore fields
   const lessons = mockLessons.map((l) => ({
     ...l,
@@ -23,16 +35,28 @@ export function LearningProvider({ children }) {
   }))
 
   // ── Articles ──────────────────────────────────────────────────────────────
-  const markArticleRead = useCallback((id) => {
-    setCompletedArticleIds((prev) => new Set([...prev, id]))
+  // Optimistic update — do NOT roll back on API failure so the UI stays usable
+  // even if the backend is temporarily unreachable. True state is loaded on next mount.
+  const markArticleRead = useCallback(async (id) => {
+    setCompletedArticleIds((p) => new Set([...p, id]))
+    try {
+      await markArticleReadApi(id)
+    } catch {
+      /* keep optimistic update */
+    }
   }, [])
 
-  const markArticleUnread = useCallback((id) => {
-    setCompletedArticleIds((prev) => {
-      const next = new Set(prev)
+  const markArticleUnread = useCallback(async (id) => {
+    setCompletedArticleIds((p) => {
+      const next = new Set(p)
       next.delete(id)
       return next
     })
+    try {
+      await markArticleUnreadApi(id)
+    } catch {
+      /* keep optimistic update */
+    }
   }, [])
 
   // ── Lessons ───────────────────────────────────────────────────────────────
